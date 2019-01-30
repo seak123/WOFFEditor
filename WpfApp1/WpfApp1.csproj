@@ -57,6 +57,7 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="SkillFile.cs" />
+    <Compile Include="SkillNode.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

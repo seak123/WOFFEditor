@@ -18,8 +18,19 @@ namespace WpfApp1
             return instance;
         }
 
+        public void NewFile()
+        {
+            currFile = new SkillFile();
+        }
+
+        public IFile GetCurrFile()
+        {
+            return currFile;
+        }
+
         public string rootPath = @"D:\";
 
         private static DataManager instance;
+        private IFile currFile;
     }
 }

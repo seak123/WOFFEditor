@@ -56,24 +56,22 @@ namespace WpfApp1
             BinaryFormatter binFormat = new BinaryFormatter();
             
             binFormat.Serialize(fStream, newFile);*/
-
+            
             SkillFile newFile = new SkillFile();
-            newFile.Coold = 1;
-            newFile.InitCoold = 0;
-            newFile.SkillName = "fire_paw";
-            newFile.UnitName = "Ifrit";
-            newFile.ManualTarget = ManualTarget.EnemySingle;
-            newFile.PitchType = PitchType.Enemy;
+           
 
             ActionNode node = new ActionNode(newFile);
             node.SetChildNodeType(ChildNodeType.subs);
+            newFile.GetRoot().AddChildNode(node);
             ActionNode node2 = new ActionNode(newFile);
             node.AddChildNode(node2);
             ActionNode node3 = new ActionNode(newFile);
             node2.AddBrotherAbove(node3);
 
-            newFile.SetRoot(node);
-            newFile.SaveFile();
+            Console.Write(newFile.ExportLuaFile());
+
+           
+
 
         }
     }

@@ -40,6 +40,8 @@ namespace WpfApp1
         public SkillFile()
         {
             nodeUid = 0;
+            treeRoot = new SkillNode(this);
+            treeRoot.SetChildNodeType(ChildNodeType.subs);
         }
 
         public int Coold
@@ -119,14 +121,12 @@ namespace WpfApp1
                 allNodes.Add(currNode);
                 queue.RemoveAt(0);
             }
-            foreach(var content in requireCache)
+            foreach (var content in requireCache)
             {
                 stream = stream + "local " + content.Key + " = require(\"" + content.Value + "\")\n";
             }
+            stream = stream + "\n";
 
-            //insert skill info
-            stream = stream + "this.name = \"" + SkillName + "\"\n";
-            stream = stream + "ini_coold = " + InitCoold + "\n";
 
             //insert all node definition
             stream = stream + "local ";
@@ -135,19 +135,20 @@ namespace WpfApp1
             {
                 stream = stream + "," + allNodes[i].nodeName + allNodes[i].GetUid();
             }
-            stream = stream + "\n";
+            stream = stream + "\n\n";
 
             //insert all node export
             stream = stream + treeRoot.ExportLuaStream();
 
+            stream = stream + "return " + treeRoot.nodeName + treeRoot.GetUid() +"\n";
+
             return stream;
         }
 
-        public void SetRoot(BaseNode node)
+        public BaseNode GetRoot()
         {
-            treeRoot = node;
+            return treeRoot;
         }
-        
 
         private BaseNode treeRoot;
         private int nodeUid;
