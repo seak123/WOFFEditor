@@ -33,6 +33,7 @@ namespace WpfApp1
     {
         string ExportLuaFile();
         int RequestNodeUid();
+        BaseNode GetRoot();
     }
     [Serializable]
     class SkillFile:IFile

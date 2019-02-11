@@ -25,52 +25,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            /*
-            string rootPath = @"D:";
-
-            string filePath = @"D:\Ifrit1.dat";
-            Stream fStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
-            BinaryFormatter binFormat = new BinaryFormatter();
-            SkillFile newFile = (SkillFile)binFormat.Deserialize(fStream);
-            Console.Write(newFile.ExportLuaFile());*/
-
-            /*
-            SkillFile newFile = new SkillFile();
-            newFile.Coold = 1;
-            newFile.InitCoold = 0;
-            newFile.SkillName = "fire_paw";
-            newFile.ManualTarget = ManualTarget.EnemySingle;
-            newFile.PitchType = PitchType.Enemy;
-
-            ActionNode node = new ActionNode(newFile);
-            node.SetChildNodeType(ChildNodeType.subs);
-            ActionNode node2 = new ActionNode(newFile);
-            node.AddChildNode(node2);
-            ActionNode node3 = new ActionNode(newFile);
-            node2.AddBrotherAbove(node3);
-
-            newFile.SetRoot(node);
-            Console.Write(newFile.ExportLuaFile());
-            string filePath = @"D:\Ifrit1.dat";
-            Stream fStream = new FileStream(filePath,FileMode.OpenOrCreate,FileAccess.ReadWrite);
-            BinaryFormatter binFormat = new BinaryFormatter();
             
-            binFormat.Serialize(fStream, newFile);*/
-            
-            SkillFile newFile = new SkillFile();
-           
 
-            ActionNode node = new ActionNode(newFile);
-            node.SetChildNodeType(ChildNodeType.subs);
-            newFile.GetRoot().AddChildNode(node);
-            ActionNode node2 = new ActionNode(newFile);
-            node.AddChildNode(node2);
-            ActionNode node3 = new ActionNode(newFile);
-            node2.AddBrotherAbove(node3);
-
-            Console.Write(newFile.ExportLuaFile());
-
-           
 
 
         }
