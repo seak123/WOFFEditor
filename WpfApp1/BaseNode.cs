@@ -12,6 +12,13 @@ namespace WpfApp1
         belongs = 0,
         subs = 1
     }
+
+    [Serializable]
+    public enum NodeType
+    {
+        Action = 0
+    }
+
     [Serializable]
     class BaseNode
     {
@@ -106,6 +113,7 @@ namespace WpfApp1
             }
             else
             {
+                child.SetParent(this);
                 childNodes.Insert(index, child);
             }
         }

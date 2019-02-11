@@ -37,7 +37,7 @@ namespace WpfApp1
         int GetUid();
     }
     [Serializable]
-    class SkillFile:IFile
+    class SkillFile:BaseFile
     {
         public SkillFile(int uid)
         {
@@ -83,22 +83,7 @@ namespace WpfApp1
             get;
         }
 
-        public int RequestNodeUid()
-        {
-            return ++nodeUid;
-        }
-
-        public int GetUid()
-        {
-            return fildUid;
-        }
-
-        public void ResetUid(int uid)
-        {
-            fildUid = uid;
-        }
-
-        public void SaveFile()
+        public override void SaveFile()
         {
             string DicrectoryPath = DataManager.GetInstance().rootPath+@"\SkillOut\"+UnitName+@"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)
@@ -112,7 +97,7 @@ namespace WpfApp1
             binFormat.Serialize(fStream, this);
         }
 
-        public string ExportLuaFile()
+        public override string ExportLuaFile()
         {
             string stream = "";
             //insert require path
@@ -158,33 +143,6 @@ namespace WpfApp1
             return stream;
         }
 
-        public BaseNode GetRoot()
-        {
-            return treeRoot;
-        }
-
-        public BaseNode FindNode(int uid)
-        {
-            List<BaseNode> searchQue = new List<BaseNode>();
-            searchQue.Add(treeRoot);
-            while(searchQue.Count > 0)
-            {
-                if (searchQue[0].GetUid() == uid) return searchQue[0];
-                else
-                {
-                    foreach(var childNode in searchQue[0].GetChilds())
-                    {
-                        searchQue.Add(childNode);
-                    }
-                    searchQue.RemoveAt(0);
-                }
-            }
-            return null;
-        }
-
-        private BaseNode treeRoot;
-        private int nodeUid;
-        private int fildUid;
         
     }
 }
