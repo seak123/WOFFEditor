@@ -13,6 +13,7 @@ namespace WpfApp1
         private DataManager()
         {
             allFiles = new List<IFile>();
+            fileUid = 0;
         }
 
         public static DataManager GetInstance()
@@ -27,8 +28,10 @@ namespace WpfApp1
 
         public void NewFile()
         {
-            currFile = new SkillFile();
+            currFile = new SkillFile(fileUid++);
+            
             allFiles.Add(currFile);
+            
         }
 
         public IFile GetCurrFile()
@@ -51,8 +54,18 @@ namespace WpfApp1
             {
                 //alert
             }
+            newFile.ResetUid(fileUid++);
             allFiles.Add(newFile);
             currFile = newFile;
+        }
+
+        public IFile FindFile(int uid)
+        {
+            foreach(var file in allFiles)
+            {
+                if (file.GetUid() == uid) return file;
+            }
+            return null;
         }
 
         public string rootPath = @"D:\";
@@ -60,5 +73,6 @@ namespace WpfApp1
         private static DataManager instance;
         private IFile currFile;
         private List<IFile> allFiles;
+        private int fileUid;
     }
 }

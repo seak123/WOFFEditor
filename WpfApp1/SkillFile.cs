@@ -34,13 +34,15 @@ namespace WpfApp1
         string ExportLuaFile();
         int RequestNodeUid();
         BaseNode GetRoot();
+        int GetUid();
     }
     [Serializable]
     class SkillFile:IFile
     {
-        public SkillFile()
+        public SkillFile(int uid)
         {
             nodeUid = 0;
+            fildUid = uid;
             treeRoot = new SkillNode(this);
             treeRoot.SetChildNodeType(ChildNodeType.subs);
         }
@@ -84,6 +86,16 @@ namespace WpfApp1
         public int RequestNodeUid()
         {
             return ++nodeUid;
+        }
+
+        public int GetUid()
+        {
+            return fildUid;
+        }
+
+        public void ResetUid(int uid)
+        {
+            fildUid = uid;
         }
 
         public void SaveFile()
@@ -151,7 +163,28 @@ namespace WpfApp1
             return treeRoot;
         }
 
+        public BaseNode FindNode(int uid)
+        {
+            List<BaseNode> searchQue = new List<BaseNode>();
+            searchQue.Add(treeRoot);
+            while(searchQue.Count > 0)
+            {
+                if (searchQue[0].GetUid() == uid) return searchQue[0];
+                else
+                {
+                    foreach(var childNode in searchQue[0].GetChilds())
+                    {
+                        searchQue.Add(childNode);
+                    }
+                    searchQue.RemoveAt(0);
+                }
+            }
+            return null;
+        }
+
         private BaseNode treeRoot;
         private int nodeUid;
+        private int fildUid;
+        
     }
 }
