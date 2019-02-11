@@ -22,13 +22,37 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataManager dataMgr;
+        SkillFile skill;
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            dataMgr = DataManager.GetInstance();
+
+            dataMgr.NewFile();
+
+            Button bt = new Button
+            {
+                Name = "test_button",
+                Content = "test",
+                Height = 30,
+                Width = 100,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(10, 10, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                Visibility = Visibility.Visible
+            };
+
+            NodeView.Children.Add(bt);
 
 
 
+        }
+
+        public void AddNode()
+        {
+           
         }
     }
 }

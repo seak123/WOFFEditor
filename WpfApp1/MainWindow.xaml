@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-    </Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="80*"/>
+			<ColumnDefinition Width="20*"/>
+		</Grid.ColumnDefinitions>
+		
+		<GridSplitter Width="5"/>
+		<Canvas x:Name="NodeView" Margin="0" Background="#FFEAE1E1"/>
+	</Grid>
 </Window>
