@@ -17,6 +17,7 @@ namespace WpfApp1
     public enum NodeType
     {
         Action = 0,
+        Buff = 1,
     }
 
     [Serializable]
@@ -81,14 +82,21 @@ namespace WpfApp1
             //base property
             Property curr;
            
-            curr = new Property("触发时机", ViewDataType.EnumSelect, "buff_occasion", LuaDataType.String, "None");
+            curr = new Property("触发时机", ViewDataType.EnumSelect, "buff_occasion", LuaDataType.String, "on_buff_add");
             properties.Add(curr);
             curr.AddEnumInstance("无", "none");
             curr.AddEnumInstance("Add时", "on_buff_add");
             curr.AddEnumInstance("Tick时", "on_tick");
 
-            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.List, "s");
-    
+            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.List, "");
+            properties.Add(curr);
+            curr.AddEnumInstance("触发几率", "check_chance");
+            curr.AddEnumInstance("固定属性", "check_attr");
+            curr.AddEnumInstance("触发层数", "check_stack");
+            curr.AddEnumInstance("击杀目标", "check_death");
+            curr.AddEnumInstance("AP值触发", "check_ap");
+           
+
         }
         private void SetParent(BaseNode parent)
         {

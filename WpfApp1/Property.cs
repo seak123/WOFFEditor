@@ -11,8 +11,10 @@ namespace WpfApp1
         Integer,
         Boolen,
         String,
+        RawString,
         List,
-        Function
+        Function,
+        Skill
     }
 
     public enum ViewDataType
