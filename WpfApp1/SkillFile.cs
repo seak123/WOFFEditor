@@ -35,6 +35,8 @@ namespace WpfApp1
         int RequestNodeUid();
         BaseNode GetRoot();
         int GetUid();
+        int AddChildNode(NodeType type, int parentUid);
+        BaseNode FindNode(int uid);
     }
     [Serializable]
     class SkillFile:BaseFile

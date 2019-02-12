@@ -13,6 +13,7 @@
 		</Grid.ColumnDefinitions>
 		
 		<GridSplitter Width="5"/>
-		<Canvas x:Name="NodeView" Margin="0" Background="#FFEAE1E1"/>
+		<Canvas x:Name="NodeCanvas" Margin="0" Background="#FFEAE1E1"/>
+		<TextBox x:Name="NodeName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="20.333,160,0,0" TextWrapping="Wrap" Text="1123" VerticalAlignment="Top" Width="120"/>
 	</Grid>
 </Window>
