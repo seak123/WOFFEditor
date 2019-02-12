@@ -16,7 +16,7 @@ namespace WpfApp1
     [Serializable]
     public enum NodeType
     {
-        Action = 0
+        Action = 0,
     }
 
     [Serializable]
