@@ -129,7 +129,7 @@ namespace WpfApp1
             curr.AddEnumInstance("Add时", "on_buff_add");
             curr.AddEnumInstance("Tick时", "on_tick");
 
-            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.ListFunction, "");
+            curr = new Property("触发条件", ViewDataType.ListSelectWithArgs, "checkers", LuaDataType.ListFunction, "");
             properties.Add(curr);
             curr.AddEnumInstance("触发几率", "check_chance");
             curr.AddEnumInstance("固定属性", "check_attr");

@@ -59,7 +59,9 @@
     <Compile Include="Nodes\CasterNode.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Nodes\ChainNode.cs" />
+    <Compile Include="Nodes\DamageNode.cs" />
     <Compile Include="Nodes\MiscNode.cs" />
+    <Compile Include="Nodes\MoveNode.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Files\SkillFile.cs" />
     <Compile Include="Nodes\SkillNode.cs" />
