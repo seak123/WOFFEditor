@@ -35,10 +35,8 @@ namespace WpfApp1
             LuaName = _luaName;
             LuaDataType = _luaDataType;
             propValue = defaultValue;
-            if(ViewType == ViewDataType.EnumSelect)
-            {
-                enumDictionary = new Dictionary<string, string>();
-            }
+            enumDictionary = new Dictionary<string, string>();
+            
         }
 
         public void AddEnumInstance(string key,string value)
