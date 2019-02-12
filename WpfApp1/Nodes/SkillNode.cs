@@ -12,6 +12,7 @@ namespace WpfApp1
         public SkillNode(IFile file)
         {
             nodeName = "skill";
+            viewName = nodeName;
             executePath = "module.battle.data.skill.skill_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

@@ -23,7 +23,8 @@ namespace WpfApp1
         TextInput,
         IntInput,
         EnumSelect,
-        ListSelect
+        ListSelectWithArgs,
+        EnumSelectWithArgs,
     }
     [Serializable]
     class Property
@@ -62,7 +63,7 @@ namespace WpfApp1
             get;
         }
 
-        public void SetValue(string input)
+        public void SetValue(string input,string args = "")
         {
             switch (ViewType)
             {
@@ -72,6 +73,23 @@ namespace WpfApp1
                     break;
                 case ViewDataType.EnumSelect:
                     propValue = enumDictionary[input];
+                    break;
+                case ViewDataType.EnumSelectWithArgs:
+                    propValue = enumDictionary[input] + args + '|';
+                    break;
+                case ViewDataType.ListSelectWithArgs:
+                    string value = enumDictionary[input];
+                    if (propValue.Contains(value))
+                    {
+                        int index = propValue.IndexOf(value);
+                        while (propValue[index] != '|')
+                        {
+                            propValue.Remove(index, 1);
+                        }
+                        propValue.Remove(index);
+                        
+                    }
+                    propValue = propValue + value + args + '|';
                     break;
             }
         }
@@ -93,6 +111,26 @@ namespace WpfApp1
             return null;
         }
 
+        public Dictionary<string,string> GetValueWithArgs()
+        {
+            Dictionary<string, string> res = new Dictionary<string, string>();
+            foreach(var word in enumDictionary)
+            {
+                if (propValue.Contains(word.Value))
+                {
+                    string args = "";
+                    int index = propValue.IndexOf(word.Value)+word.Value.Length;
+                    while (propValue[index] != '|')
+                    {
+                        args = args + propValue[index];
+                        ++index;
+                    }
+                    res.Add(word.Key, args);
+                }
+            }
+            return res;
+        }
+
         public string GetPropValue()
         {
             return propValue;
@@ -110,6 +148,20 @@ namespace WpfApp1
                     break;
                 case LuaDataType.String:
                     luaValue = "\"" + propValue + "\"";
+                    break;
+                case LuaDataType.RawString:
+                    luaValue = propValue;
+                    break;
+                case LuaDataType.ListInt:
+                    luaValue = "{" + propValue + "}";
+                    break;
+                case LuaDataType.ListFunction:
+                    break;
+                case LuaDataType.Function:
+                    foreach(var word in GetValueWithArgs())
+                    {
+                        luaValue = enumDictionary[word.Key] + "(" + word.Value + ")";
+                    }
                     break;
             }
             return argName + " = " + luaValue;

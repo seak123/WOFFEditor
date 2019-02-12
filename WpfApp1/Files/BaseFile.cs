@@ -72,9 +72,17 @@ namespace WpfApp1
                 case NodeType.Chain:
                     node = new ChainNode(this);
                     break;
-                case NodeType.Skill:
-                    node = new SkillNode(this);
+                //misc Node
+                case NodeType.Queue:
+                    node = new MiscNode(this, MiscType.Queue);
                     break;
+                case NodeType.Wait:
+                    node = new MiscNode(this, MiscType.Wait);
+                    break;
+                case NodeType.Terminal:
+                    node = new MiscNode(this, MiscType.Terminal);
+                    break;
+               
             }
             return node;
         }

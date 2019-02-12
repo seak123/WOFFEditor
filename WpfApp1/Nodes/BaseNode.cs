@@ -20,13 +20,51 @@ namespace WpfApp1
         Buff = 1,
         Caster = 2,
         Chain = 3,
-        Skill = 100,
+        Damage = 4,
+        Move = 5,
+
+        //misc node
+        //Ap = 50,
+        //Delay = 51,
+        Wait = 52,
+        //Hide = 53,
+        Queue = 54,
+        Terminal = 55,
+        //ReAct = 56,
+        //RetargetAll = 57,
+        //RetargetMain = 58,
+        //Revive = 59,
+        //Interrupt = 60,
+        //State = 61,
+        //Steady = 62,
+        //KeepAlive = 63,
+        //MirageDie = 64,
+        //Undying = 65,
+        //Death = 66,
+        //Relief = 67,
+        //Phase = 68,
+        //Yield = 69,
+        //Sync = 70,
+        //Hurt = 71,
+        //CommonBuff = 72,
+        //Rotate = 73,
+        //Split = 74,
+        //SceneReset = 75,
+        //Camera = 76,
+        //Audio = 77,
+        //TapWord = 78,
+
+        //root Node
+        //Skill = 100,
     }
 
     [Serializable]
     class BaseNode
     {
         public string nodeName="BaseNode";
+
+        public string viewName = "BaseNode";
+
         public string executePath = "BasePath";
 
         protected List<Property> properties;
@@ -39,7 +77,7 @@ namespace WpfApp1
         protected IFile sourceFile;
 
 
-        public string ExportLuaStream() {
+        public virtual string ExportLuaStream() {
             string stream = "";
             string argName = nodeName + uid;
             stream = stream + argName + " = " + nodeName + ".new()\n";

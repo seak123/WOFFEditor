@@ -12,6 +12,7 @@ namespace WpfApp1
         public BuffNode(IFile file)
         {
             nodeName = "buff";
+            viewName = nodeName;
             executePath = "module.battle.data.skill.buff_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

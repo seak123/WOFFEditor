@@ -12,6 +12,7 @@ namespace WpfApp1
         public ChainNode(IFile file)
         {
             nodeName = "chain";
+            viewName = nodeName;
             executePath = "module.battle.data.skill.chain_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();
