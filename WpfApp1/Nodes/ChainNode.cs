@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp1.Nodes
+namespace WpfApp1
 {
     [Serializable]
     class ChainNode:BaseNode

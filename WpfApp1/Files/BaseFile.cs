@@ -63,6 +63,18 @@ namespace WpfApp1
                 case NodeType.Action:
                     node = new ActionNode(this);
                     break;
+                case NodeType.Buff:
+                    node = new BuffNode(this);
+                    break;
+                case NodeType.Caster:
+                    node = new CasterNode(this);
+                    break;
+                case NodeType.Chain:
+                    node = new ChainNode(this);
+                    break;
+                case NodeType.Skill:
+                    node = new SkillNode(this);
+                    break;
             }
             return node;
         }
