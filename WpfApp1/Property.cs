@@ -19,7 +19,8 @@ namespace WpfApp1
     {
         TextInput,
         IntInput,
-        EnumSelect
+        EnumSelect,
+        ListSelect
     }
     [Serializable]
     class Property

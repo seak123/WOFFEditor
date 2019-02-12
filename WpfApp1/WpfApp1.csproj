@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseFile.cs" />
+    <Compile Include="BuffNode.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="SkillFile.cs" />

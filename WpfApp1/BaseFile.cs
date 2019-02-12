@@ -70,7 +70,7 @@ namespace WpfApp1
         public int AddChildNode(NodeType type, int parentUid)
         {
             BaseNode node = NodeCreator(type);
-            node.SetParent(FindNode(parentUid));
+            FindNode(parentUid).AddChildNode(node);
             return node.GetUid();
         }
         // add brother

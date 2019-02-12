@@ -78,10 +78,22 @@ namespace WpfApp1
             properties = new List<Property>();
             childNodes = new List<BaseNode>();
             uid = 0;
+            //base property
+            Property curr;
+           
+            curr = new Property("触发时机", ViewDataType.EnumSelect, "buff_occasion", LuaDataType.String, "None");
+            properties.Add(curr);
+            curr.AddEnumInstance("无", "none");
+            curr.AddEnumInstance("Add时", "on_buff_add");
+            curr.AddEnumInstance("Tick时", "on_tick");
+
+            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.List, "s");
+    
         }
-        public void SetParent(BaseNode parent)
+        private void SetParent(BaseNode parent)
         {
             parentNode = parent;
+            //parent.AddChildNode(this);
         }
 
         public BaseNode GetParent()
