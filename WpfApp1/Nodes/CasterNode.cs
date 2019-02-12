@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+    [Serializable]
     class CasterNode:BaseNode
     {
         public CasterNode(IFile file)

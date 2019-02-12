@@ -54,22 +54,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BaseFile.cs" />
-    <Compile Include="BuffNode.cs" />
+    <Compile Include="Files\BaseFile.cs" />
+    <Compile Include="Nodes\BuffNode.cs" />
+    <Compile Include="Nodes\CasterNode.cs" />
     <Compile Include="DataManager.cs" />
+    <Compile Include="Nodes\ChainNode.cs" />
     <Compile Include="Property.cs" />
-    <Compile Include="SkillFile.cs" />
-    <Compile Include="SkillNode.cs" />
+    <Compile Include="Files\SkillFile.cs" />
+    <Compile Include="Nodes\SkillNode.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ActionNode.cs" />
+    <Compile Include="Nodes\ActionNode.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BaseNode.cs" />
+    <Compile Include="Nodes\BaseNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

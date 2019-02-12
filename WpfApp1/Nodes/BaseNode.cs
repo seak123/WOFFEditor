@@ -18,6 +18,9 @@ namespace WpfApp1
     {
         Action = 0,
         Buff = 1,
+        Caster = 2,
+        Chain = 3,
+        Skill = 100,
     }
 
     [Serializable]
@@ -88,7 +91,7 @@ namespace WpfApp1
             curr.AddEnumInstance("Add时", "on_buff_add");
             curr.AddEnumInstance("Tick时", "on_tick");
 
-            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.List, "");
+            curr = new Property("触发条件", ViewDataType.ListSelect, "checkers", LuaDataType.ListFunction, "");
             properties.Add(curr);
             curr.AddEnumInstance("触发几率", "check_chance");
             curr.AddEnumInstance("固定属性", "check_attr");
@@ -107,6 +110,11 @@ namespace WpfApp1
         public BaseNode GetParent()
         {
             return parentNode;
+        }
+
+        public List<Property> GetProperties()
+        {
+            return properties;
         }
 
         public int GetUid()

@@ -12,7 +12,8 @@ namespace WpfApp1
         Boolen,
         String,
         RawString,
-        List,
+        ListFunction,
+        ListInt,
         Function,
         Skill
     }
