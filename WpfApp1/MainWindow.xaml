@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="80*"/>
 			<ColumnDefinition Width="20*"/>
 		</Grid.ColumnDefinitions>
-		
-		<GridSplitter Width="5"/>
+
+		<GridSplitter Width="5" Panel.ZIndex="1"/>
 		<Canvas x:Name="NodeCanvas" Margin="0" Background="#FFEAE1E1"/>
-		<TextBox x:Name="NodeName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="20.333,160,0,0" TextWrapping="Wrap" Text="1123" VerticalAlignment="Top" Width="120"/>
+		<Grid x:Name="PropertyGrid" Grid.Column="1" Margin="0" ShowGridLines="True"/>
+		
 	</Grid>
 </Window>

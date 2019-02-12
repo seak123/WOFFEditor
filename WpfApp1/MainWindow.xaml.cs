@@ -12,8 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WpfApp1
 {
@@ -33,6 +31,7 @@ namespace WpfApp1
 
         int height = 0;
 
+        List<Path> paths;
 
         public MainWindow()
         {
@@ -46,12 +45,43 @@ namespace WpfApp1
 
             nodeDic = new Dictionary<int, Button>();
 
+            paths = new List<Path>();
             #endregion
 
             CreateContextMenu();
 
             CreateRootNode();
 
+
+
+            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
+            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
+            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
+
+            //Button bt = new Button {
+            //    Content = "test",
+            //    Height = 30,
+            //    Width = 100,
+
+            //};
+
+            //PropertyGrid.Children.Add(bt);
+            
+            //bt.SetValue(Grid.RowProperty, 0);
+            //bt.SetValue(Grid.ColumnProperty, 0);
+
+            //ComboBox cb = new ComboBox();
+            //cb.ItemsSource = Enum.GetValues(typeof(NodeType)).Cast<NodeType>();
+
+            //PropertyGrid.Children.Add(cb);
+            //cb.Width = 100;
+            //cb.Height = 30;
+            //cb.SetValue(Grid.RowProperty, 0);
+            //cb.SetValue(Grid.ColumnProperty, 1);
+            
         }
 
         public void AddNode(NodeType type,int parentUid)
@@ -79,13 +109,16 @@ namespace WpfApp1
             bt.MouseRightButtonUp += (s, e) => {
                 currentSelectNodeUID = id;
             };
-            bt.Click += (e, a) => {
-                NodeName.Text = id.ToString();
+            bt.Click += (e, a) =>
+            {
+                //NodeName.Text = id.ToString();
                 currentSelectNodeUID = id;
+                SetPropertyView(currentSelectNodeUID);
             };
 
             height = 0;
             UpdateNodeView(skill.GetRoot(),0);
+            UpdateNodeLine();
 
         }
 
@@ -99,11 +132,11 @@ namespace WpfApp1
             Button btRoot = new Button
             {
                 Name = "root_button",
-                Content = "root",
+                Content = "Root",
                 Height = 30,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(10, 10, 0, 0),
+                Margin = new Thickness(0, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Top,
                 Visibility = Visibility.Visible
             };
@@ -115,7 +148,7 @@ namespace WpfApp1
             btRoot.ContextMenu = nodeViewMenu;
             btRoot.MouseRightButtonUp += (s, e) => { currentSelectNodeUID = skill.GetRoot().GetUid(); };
             btRoot.Click += (e, a) => {
-                NodeName.Text = skill.GetRoot().GetUid().ToString();
+                //NodeName.Text = skill.GetRoot().GetUid().ToString();
                 currentSelectNodeUID = skill.GetRoot().GetUid();
             };
         }
@@ -156,5 +189,142 @@ namespace WpfApp1
             }
 
         }
+
+        void UpdateNodeLine()
+        {
+            foreach (var pt in paths)
+            {
+                NodeCanvas.Children.Remove(pt);
+            }
+            paths.Clear();
+
+            foreach (var key in nodeDic.Keys)
+            {
+                int parentUID = 0;
+
+                if (skill.FindNode(key).GetParent() != null)
+                {
+                    parentUID = skill.FindNode(key).GetParent().GetUid();
+                    Drawline(new Point(nodeDic[parentUID].Margin.Left + 50, nodeDic[parentUID].Margin.Top + 15),
+                       new Point(nodeDic[key].Margin.Left + 50, nodeDic[key].Margin.Top + 15));
+                }
+
+            }
+        }
+
+        void SetPropertyView(int uid)
+        {
+            PropertyGrid.Children.Clear();
+            PropertyGrid.RowDefinitions.Clear();
+            PropertyGrid.ColumnDefinitions.Clear();
+
+            BaseNode node =  skill.FindNode(uid);
+
+            PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            int rowindex = 0;
+            foreach (var property in node.GetProperties())
+            {
+                PropertyGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                Label label = new Label
+                {
+                    Content = property.ViewName,
+                };
+
+                PropertyGrid.Children.Add(label);
+                label.SetValue(Grid.RowProperty, rowindex);
+                
+
+                switch (property.ViewType) {
+                    case ViewDataType.EnumSelect:
+                        ComboBox cb = new ComboBox
+                        {
+                            ItemsSource = property.enumDictionary
+                        };
+                        cb.Width = 100;
+                        cb.Height = 30;
+                        cb.SelectedValuePath = "Key";
+                        cb.DisplayMemberPath = "Key";
+
+                        PropertyGrid.Children.Add(cb);
+                        cb.SetValue(Grid.RowProperty,rowindex);
+                        cb.SetValue(Grid.ColumnProperty, 1);
+                        break;
+                    case ViewDataType.IntInput:
+                        TextBox int_tb = new TextBox
+                        {
+                            MinWidth = 100,
+                            MinHeight = 30
+                        };
+                        
+                        PropertyGrid.Children.Add(int_tb);
+                        int_tb.SetValue(Grid.RowProperty, rowindex);
+                        int_tb.SetValue(Grid.ColumnProperty, 1);
+                        break;
+                    case ViewDataType.ListSelect:
+                        TextBox temp = new TextBox
+                        {
+                            MinWidth = 100,
+                            MinHeight = 30
+                        };
+
+                        PropertyGrid.Children.Add(temp);
+                        temp.SetValue(Grid.RowProperty, rowindex);
+                        temp.SetValue(Grid.ColumnProperty, 1);
+                        break;
+                    case ViewDataType.TextInput:
+                        TextBox txt_tb = new TextBox
+                        {
+                            MinWidth = 100,
+                            MinHeight = 30
+                        };
+                        
+                        PropertyGrid.Children.Add(txt_tb);
+                        txt_tb.SetValue(Grid.RowProperty, rowindex);
+                        txt_tb.SetValue(Grid.ColumnProperty, 1);
+                        break;
+                        
+                }
+
+                rowindex++;
+            }
+        }
+
+ 
+        void Drawline(Point start,Point end)
+        {
+            Point turn = new Point(start.X, end.Y);
+            if (start.Y != end.Y)
+            {
+                LineGeometry line1 = new LineGeometry();
+                line1.StartPoint = start;
+                line1.EndPoint = turn;
+
+                Path pt1 = new Path();
+                pt1.Stroke = Brushes.Black;
+                pt1.StrokeThickness = 1;
+                pt1.Data = line1;
+                
+                NodeCanvas.Children.Add(pt1);
+                Canvas.SetZIndex(pt1, -1);
+                paths.Add(pt1);
+            }
+            
+            LineGeometry line2 = new LineGeometry();
+            line2.StartPoint = turn;
+            line2.EndPoint = end;
+
+            Path pt2 = new Path();
+            pt2.Stroke = Brushes.Black;
+            pt2.StrokeThickness = 1;
+            pt2.Data = line2;
+
+            NodeCanvas.Children.Add(pt2);
+            Canvas.SetZIndex(pt2, -1);
+            paths.Add(pt2);
+        }
+
     }
 }
