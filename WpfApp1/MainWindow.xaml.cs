@@ -52,44 +52,26 @@ namespace WpfApp1
 
             CreateRootNode();
 
-
-
-            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            //PropertyGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
-            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
-            //PropertyGrid.RowDefinitions.Add(new RowDefinition());
-
-            //Button bt = new Button {
-            //    Content = "test",
-            //    Height = 30,
-            //    Width = 100,
-
-            //};
-
-            //PropertyGrid.Children.Add(bt);
-            
-            //bt.SetValue(Grid.RowProperty, 0);
-            //bt.SetValue(Grid.ColumnProperty, 0);
-
-            //ComboBox cb = new ComboBox();
-            //cb.ItemsSource = Enum.GetValues(typeof(NodeType)).Cast<NodeType>();
-
-            //PropertyGrid.Children.Add(cb);
-            //cb.Width = 100;
-            //cb.Height = 30;
-            //cb.SetValue(Grid.RowProperty, 0);
-            //cb.SetValue(Grid.ColumnProperty, 1);
             
         }
 
         public void AddNode(NodeType type,int parentUid)
         {
+ 
+            int id = skill.AddChildNode(type, currentSelectNodeUID);
+
+            nodeDic.Add(id, CreateNode(id));
+
+            height = 0;
+            UpdateNodeView(skill.GetRoot(),0);
+            UpdateNodeLine();
+        }
+
+        Button CreateNode(int uid)
+        {
             Button bt = new Button
             {
                 Name = "test_button",
-                Content = type.ToString(),
                 Height = 30,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Left,
@@ -98,33 +80,19 @@ namespace WpfApp1
                 Visibility = Visibility.Visible
             };
 
-            NodeCanvas.Children.Add(bt);
-
-
-            int id = skill.AddChildNode(type, currentSelectNodeUID);
-
-            nodeDic.Add(id, bt);
-
             bt.ContextMenu = nodeViewMenu;
-            bt.MouseRightButtonUp += (s, e) => {
-                currentSelectNodeUID = id;
+            bt.MouseRightButtonUp += (s, e) =>
+            {
+                currentSelectNodeUID = uid;
             };
             bt.Click += (e, a) =>
             {
-                //NodeName.Text = id.ToString();
-                currentSelectNodeUID = id;
+                currentSelectNodeUID = uid;
                 SetPropertyView(currentSelectNodeUID);
             };
+            NodeCanvas.Children.Add(bt);
 
-            height = 0;
-            UpdateNodeView(skill.GetRoot(),0);
-            UpdateNodeLine();
-
-        }
-
-        void CreateNode()
-        {
-
+            return bt;
         }
 
         public void DeleteNode(int uid)
@@ -180,22 +148,10 @@ namespace WpfApp1
         {
             if (nodeDic.ContainsKey(root.GetUid()) == false)
             {
-                Button bt = new Button
-                {
-                    Name = "test_button",
-                    Content = root.nodeName,
-                    Height = 30,
-                    Width = 100,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Margin = new Thickness(10, 10, 0, 0),
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Visibility = Visibility.Visible
-                };
-
-                NodeCanvas.Children.Add(bt);
-
-                nodeDic[root.GetUid()] = bt;
+                nodeDic.Add(root.GetUid(), CreateNode(root.GetUid()));
             }
+
+            nodeDic[root.GetUid()].Content = root.nodeName;
 
             nodeDic[root.GetUid()].Margin = new Thickness(10+110 * depth, 20+height, 0, 0);
 
