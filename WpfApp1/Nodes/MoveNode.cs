@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+    [Serializable]
     class MoveNode:BaseNode
     {
         public MoveNode(IFile file)

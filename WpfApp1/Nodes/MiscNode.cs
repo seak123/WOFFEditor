@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+    [Serializable]
     public enum MiscType
     {
         Ap = 0,
@@ -39,6 +40,7 @@ namespace WpfApp1
         TapWord = 28,
     }
 
+    [Serializable]
     class MiscNode:BaseNode
     {
         public MiscNode(IFile file,MiscType _type = MiscType.Queue)
