@@ -13,6 +13,7 @@ namespace WpfApp1
         {
             nodeName = "action";
             viewName = nodeName;
+            type = NodeType.Action;
             executePath = "module.battle.data.skill.action_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

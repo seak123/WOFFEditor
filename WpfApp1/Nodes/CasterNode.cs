@@ -13,6 +13,7 @@ namespace WpfApp1
         {
             nodeName = "caster";
             viewName = nodeName;
+            type = NodeType.Caster;
             executePath = "module.battle.data.skill.caster_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

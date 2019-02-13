@@ -12,6 +12,7 @@ namespace WpfApp1
         {
             nodeName = "damage";
             viewName = nodeName;
+            type = NodeType.Damage;
             executePath = "module.battle.data.skill.damage_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

@@ -55,7 +55,7 @@ namespace WpfApp1
         //TapWord = 78,
 
         //root Node
-        //Skill = 100,
+        Skill = 100,
     }
 
     [Serializable]
@@ -72,10 +72,15 @@ namespace WpfApp1
         protected BaseNode parentNode;
         protected List<BaseNode> childNodes;
         protected ChildNodeType childNodeType=ChildNodeType.subs;
+        protected NodeType type;
 
         protected int uid;
         protected IFile sourceFile;
 
+        public NodeType GetNodeType()
+        {
+            return type;
+        }
 
         public virtual string ExportLuaStream() {
             string stream = "";

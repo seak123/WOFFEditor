@@ -41,27 +41,31 @@ namespace WpfApp1
 
     class MiscNode:BaseNode
     {
-        public MiscNode(IFile file,MiscType type = MiscType.Ap)
+        public MiscNode(IFile file,MiscType _type = MiscType.Queue)
         {
             nodeName = "misc";
             viewName = nodeName;
+            type = NodeType.Queue;
             executePath = "module.battle.data.skill.misc_vos";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();
 
             Property curr;
-            switch (type)
+            switch (_type)
             {
                 case MiscType.Wait:
                     viewName = "wait";
+                    type = NodeType.Wait;
                     curr = new Property("事件名", ViewDataType.TextInput, "event", LuaDataType.String, "None");
                     properties.Add(curr);
                     
                     break;
                 case MiscType.Queue:
                     viewName = "queue";
+                    type = NodeType.Queue;
                     break;
                 case MiscType.Terminal:
+                    type = NodeType.Terminal;
                     viewName = "terminal";
                     break;
             }

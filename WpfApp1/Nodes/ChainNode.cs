@@ -13,6 +13,7 @@ namespace WpfApp1
         {
             nodeName = "chain";
             viewName = nodeName;
+            type = NodeType.Chain;
             executePath = "module.battle.data.skill.chain_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();

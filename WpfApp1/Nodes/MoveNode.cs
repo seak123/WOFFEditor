@@ -12,6 +12,7 @@ namespace WpfApp1
         {
             nodeName = "move";
             viewName = nodeName;
+            type = NodeType.Move;
             executePath = "module.battle.data.skill.move_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();
