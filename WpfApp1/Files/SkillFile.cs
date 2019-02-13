@@ -49,8 +49,8 @@ namespace WpfApp1
             treeRoot = new SkillNode(this);
             treeRoot.SetChildNodeType(ChildNodeType.subs);
 
-            baseRequirePath = new Dictionary<string, string>();
-            baseRequirePath.Add("calc", "module.battle.data.skill.calculate");
+            //baseRequirePath = new Dictionary<string, string>();
+            //baseRequirePath.Add("calc", "module.battle.data.skill.calculate");
         }
 
         public int Coold
@@ -129,10 +129,10 @@ namespace WpfApp1
             {
                 stream = stream + "local " + content.Key + " = require(\"" + content.Value + "\")\n";
             }
-            foreach( var content in baseRequirePath)
-            {
-                stream = stream + "local " + content.Key + " = require(\"" + content.Value + "\")\n";
-            }
+           
+            //add base require
+            stream = stream + "local calc = require(\"" + "module.battle.data.skill.calculate" + "\")\n";
+            
             stream = stream + "\n";
 
 

@@ -165,7 +165,7 @@ namespace WpfApp1
             }
         }
 
-        protected Dictionary<string, string> baseRequirePath;
+        //protected Dictionary<string, string> baseRequirePath;
 
         protected BaseNode treeRoot;
         protected int nodeUid;
