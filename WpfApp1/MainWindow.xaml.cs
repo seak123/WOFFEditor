@@ -136,7 +136,7 @@ namespace WpfApp1
                 Height = 30,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(10, 10, 0, 0),
                 VerticalAlignment = VerticalAlignment.Top,
                 Visibility = Visibility.Visible
             };
@@ -173,7 +173,7 @@ namespace WpfApp1
        
         void UpdateNodeView(BaseNode root,int depth)
         {
-            nodeDic[root.GetUid()].Margin = new Thickness(110 * depth, height, 0, 0);
+            nodeDic[root.GetUid()].Margin = new Thickness(10+110 * depth, 20+height, 0, 0);
 
             if (root.GetChilds().Count == 0)
             {
@@ -326,5 +326,27 @@ namespace WpfApp1
             paths.Add(pt2);
         }
 
+        private void MenuItem_Click_New(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void MenuItem_Click_Save(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_SaveAll(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_Export(object sender, RoutedEventArgs e)
+        {
+            skill.ExportLuaFile();
+        }
     }
 }
