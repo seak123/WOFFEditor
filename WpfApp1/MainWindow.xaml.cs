@@ -263,7 +263,7 @@ namespace WpfApp1
                         int_tb.SetValue(Grid.RowProperty, rowindex);
                         int_tb.SetValue(Grid.ColumnProperty, 1);
                         break;
-                    case ViewDataType.ListSelect:
+                    case ViewDataType.ListSelectWithArgs:
                         TextBox temp = new TextBox
                         {
                             MinWidth = 100,

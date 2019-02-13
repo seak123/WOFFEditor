@@ -172,7 +172,7 @@ namespace WpfApp1
         string argsValue;
 
         //ViewEnumSelect;
-        Dictionary<string, string> enumDictionary;
+        public Dictionary<string, string> enumDictionary { get; set; }
         
     }
 }
