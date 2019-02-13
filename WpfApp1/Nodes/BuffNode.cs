@@ -16,7 +16,7 @@ namespace WpfApp1
             executePath = "module.battle.data.skill.buff_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();
-
+            SetChildNodeType(ChildNodeType.belongs);
             Property curr;
             //inti buff vo
             curr = new Property("Buff ID", ViewDataType.IntInput, "buff_id", LuaDataType.Integer, "0");

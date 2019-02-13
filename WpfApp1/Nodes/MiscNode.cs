@@ -71,7 +71,7 @@ namespace WpfApp1
         public override string ExportLuaStream()
         {
             string stream = "";
-            string argName = viewName + uid;
+            string argName = nodeName + uid;
             stream = stream + argName + " = " + "misc." + viewName + "()\n";
             foreach (var prop in properties)
             {

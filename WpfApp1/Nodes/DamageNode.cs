@@ -18,7 +18,7 @@ namespace WpfApp1
 
             Property curr;
             //inti  vo
-            curr = new Property("伤害公式", ViewDataType.EnumSelectWithArgs, "calc_func", LuaDataType.Function, "");
+            curr = new Property("伤害公式", ViewDataType.EnumSelectWithArgs, "calc_func", LuaDataType.Function, "calc.make_common_attack0,0|");
             properties.Add(curr);
             curr.AddEnumInstance("常用", "calc.make_common_attack");
 

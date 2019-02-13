@@ -72,6 +72,12 @@ namespace WpfApp1
                 case NodeType.Chain:
                     node = new ChainNode(this);
                     break;
+                case NodeType.Move:
+                    node = new MoveNode(this);
+                    break;
+                case NodeType.Damage:
+                    node = new DamageNode(this);
+                    break;
                 //misc Node
                 case NodeType.Queue:
                     node = new MiscNode(this, MiscType.Queue);
@@ -125,6 +131,7 @@ namespace WpfApp1
             }
         }
 
+        protected Dictionary<string, string> baseRequirePath;
 
         protected BaseNode treeRoot;
         protected int nodeUid;
