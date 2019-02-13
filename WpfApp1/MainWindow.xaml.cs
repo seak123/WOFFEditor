@@ -136,7 +136,7 @@ namespace WpfApp1
                 Height = 30,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(10, 10, 0, 0),
+                Margin = new Thickness(10, 20, 0, 0),
                 VerticalAlignment = VerticalAlignment.Top,
                 Visibility = Visibility.Visible
             };
@@ -241,13 +241,19 @@ namespace WpfApp1
                     case ViewDataType.EnumSelect:
                         ComboBox cb = new ComboBox
                         {
-                            ItemsSource = property.enumDictionary
+                            Width = 100,
+                            Height = 30,
+                            
+                            ItemsSource = property.enumDictionary,
+                            
                         };
-                        cb.Width = 100;
-                        cb.Height = 30;
+                        
                         cb.SelectedValuePath = "Key";
                         cb.DisplayMemberPath = "Key";
 
+                        cb.SelectedValue = property.GetValue();
+                        
+                        cb.SelectionChanged += (e, a) => { property.SetValue(cb.SelectedValue.ToString()); };
                         PropertyGrid.Children.Add(cb);
                         cb.SetValue(Grid.RowProperty,rowindex);
                         cb.SetValue(Grid.ColumnProperty, 1);
@@ -258,7 +264,7 @@ namespace WpfApp1
                             MinWidth = 100,
                             MinHeight = 30
                         };
-                        
+                        int_tb.TextChanged += (e, a) => { property.SetValue(int_tb.Text); };
                         PropertyGrid.Children.Add(int_tb);
                         int_tb.SetValue(Grid.RowProperty, rowindex);
                         int_tb.SetValue(Grid.ColumnProperty, 1);
@@ -280,7 +286,7 @@ namespace WpfApp1
                             MinWidth = 100,
                             MinHeight = 30
                         };
-                        
+                        txt_tb.TextChanged += (e, a) => { property.SetValue(txt_tb.Text); };
                         PropertyGrid.Children.Add(txt_tb);
                         txt_tb.SetValue(Grid.RowProperty, rowindex);
                         txt_tb.SetValue(Grid.ColumnProperty, 1);
