@@ -92,6 +92,40 @@ namespace WpfApp1
             }
             return node;
         }
+        //delete node
+        public void DeleteNode(int uid)
+        {
+            BaseNode node = FindNode(uid);
+            if (node != null)
+            {
+                node.GetParent().DeleteChildNode(uid);
+            }
+            
+        }
+        //replace node
+        public void ReplaceNode(NodeType type,int uid)
+        {
+            BaseNode newNode = NodeCreator(type);
+            BaseNode oldNode = FindNode(uid);
+            BaseNode parentNode = oldNode.GetParent();
+            if(oldNode != null)
+            {
+                List<BaseNode> list = oldNode.GetChilds();
+                for(int i = 0; i < list.Count; ++i)
+                {
+                    newNode.AddChildNode(list[i]);
+                }
+            }
+            for(int i = 0; i < parentNode.GetChilds().Count; ++i)
+            {
+                if (parentNode.GetChilds()[i].GetUid() == uid)
+                {
+                    parentNode.GetChilds()[i] = newNode;
+                    return;
+                }
+            }
+            
+        }
         // add child
         public int AddChildNode(NodeType type, int parentUid)
         {

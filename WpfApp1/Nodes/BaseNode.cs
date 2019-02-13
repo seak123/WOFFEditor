@@ -208,6 +208,18 @@ namespace WpfApp1
             childNodeType = type;
         }
 
+        public void DeleteChildNode(int uid)
+        {
+            for(int i = 0; i < childNodes.Count; ++i)
+            {
+                if (childNodes[i].GetUid() == uid)
+                {
+                    childNodes.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
         public void AddChildNode(BaseNode child,int index = -1)
         {
             if (index == -1)
