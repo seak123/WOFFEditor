@@ -120,29 +120,67 @@ namespace WpfApp1
             properties = new List<Property>();
             childNodes = new List<BaseNode>();
             uid = 0;
-            //base property
-            Property curr;
+            
            
-            curr = new Property("触发时机", ViewDataType.EnumSelect, "buff_occasion", LuaDataType.String, "on_buff_add");
-            properties.Add(curr);
-            curr.AddEnumInstance("无", "none");
-            curr.AddEnumInstance("Add时", "on_buff_add");
-            curr.AddEnumInstance("Tick时", "on_tick");
-
-            curr = new Property("触发条件", ViewDataType.ListSelectWithArgs, "checkers", LuaDataType.ListFunction, "");
-            properties.Add(curr);
-            curr.AddEnumInstance("触发几率", "check_chance");
-            curr.AddEnumInstance("固定属性", "check_attr");
-            curr.AddEnumInstance("触发层数", "check_stack");
-            curr.AddEnumInstance("击杀目标", "check_death");
-            curr.AddEnumInstance("AP值触发", "check_ap");
-           
-
         }
+
+        private bool ContainSpecialProp(PropertyType type)
+        {
+            foreach (var prop in properties)
+            {
+                if (prop.PropType == type)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void RemoveSpecialProp(PropertyType type)
+        {
+            for(int index = properties.Count; index >= 0; --index)
+            {
+                if(properties[index].PropType == type)
+                {
+                    properties.RemoveAt(index);
+                }
+            }
+        }
+
         private void SetParent(BaseNode parent)
         {
             parentNode = parent;
-            //parent.AddChildNode(this);
+           
+            //reset special property
+            if(ContainSpecialProp(PropertyType.Buff))
+            {
+                if(parent.nodeName != "buff")
+                {
+                    RemoveSpecialProp(PropertyType.Buff);
+                }
+            }
+            else
+            {
+                if(parent.nodeName == "buff")
+                {
+                    Property curr;
+
+                    curr = new Property("触发时机", ViewDataType.EnumSelect, "buff_occasion", LuaDataType.String, "on_buff_add",PropertyType.Buff);
+                    properties.Add(curr);
+                    curr.AddEnumInstance("无", "none");
+                    curr.AddEnumInstance("Add时", "on_buff_add");
+                    curr.AddEnumInstance("Tick时", "on_tick");
+
+                    curr = new Property("触发条件", ViewDataType.ListSelectWithArgs, "checkers", LuaDataType.ListFunction, "",PropertyType.Buff);
+                    properties.Add(curr);
+                    curr.AddEnumInstance("触发几率", "check_chance");
+                    curr.AddEnumInstance("固定属性", "check_attr");
+                    curr.AddEnumInstance("触发层数", "check_stack");
+                    curr.AddEnumInstance("击杀目标", "check_death");
+                    curr.AddEnumInstance("AP值触发", "check_ap");
+
+                }
+            }
         }
 
         public BaseNode GetParent()

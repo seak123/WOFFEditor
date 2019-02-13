@@ -26,16 +26,23 @@ namespace WpfApp1
         ListSelectWithArgs,
         EnumSelectWithArgs,
     }
+
+    public enum PropertyType
+    {
+        Common,
+        Buff
+    }
     [Serializable]
     class Property
     {
-        public Property(string _viewName="None",ViewDataType _viewType=ViewDataType.TextInput,string _luaName="None",LuaDataType _luaDataType=LuaDataType.Boolen,string defaultValue="None")
+        public Property(string _viewName="None",ViewDataType _viewType=ViewDataType.TextInput,string _luaName="None",LuaDataType _luaDataType=LuaDataType.Boolen,string defaultValue="None",PropertyType type = PropertyType.Common)
         {
             ViewName = _viewName;
             ViewType = _viewType;
             LuaName = _luaName;
             LuaDataType = _luaDataType;
             propValue = defaultValue;
+            PropType = type;
             enumDictionary = new Dictionary<string, string>();
             
         }
@@ -62,6 +69,11 @@ namespace WpfApp1
         {
             get;
         }
+
+        public PropertyType PropType {
+            get;
+        }
+        
 
         public void SetValue(string input,string args = "")
         {
@@ -171,6 +183,7 @@ namespace WpfApp1
 
         string argsValue;
 
+       
         //ViewEnumSelect;
         public Dictionary<string, string> enumDictionary { get; set; }
         
