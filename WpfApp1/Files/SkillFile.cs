@@ -87,7 +87,7 @@ namespace WpfApp1
 
         public override void SaveFile()
         {
-            string DicrectoryPath = DataManager.GetInstance().rootPath+@"\SkillOut\"+UnitName+@"\Skill";
+            string DicrectoryPath = DataManager.GetInstance().rootPath+@"\BinaryOut\"+UnitName+@"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)
             {
                 System.IO.Directory.CreateDirectory(DicrectoryPath);
@@ -141,6 +141,17 @@ namespace WpfApp1
             stream = stream + treeRoot.ExportLuaStream();
 
             stream = stream + "return " + treeRoot.nodeName + treeRoot.GetUid() +"\n";
+
+
+            //export lua file
+            string DicrectoryPath = DataManager.GetInstance().rootPath + @"\LuaOut\" + UnitName + @"\Skill";
+            if (System.IO.Directory.Exists(DicrectoryPath) == false)
+            {
+                System.IO.Directory.CreateDirectory(DicrectoryPath);
+            }
+            string filePath = DicrectoryPath + @"\" + SkillName + ".lua";
+          
+            File.WriteAllText(filePath, stream);
 
             return stream;
         }

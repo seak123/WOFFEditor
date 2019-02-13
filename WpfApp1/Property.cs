@@ -168,6 +168,13 @@ namespace WpfApp1
                     luaValue = "{" + propValue + "}";
                     break;
                 case LuaDataType.ListFunction:
+                    luaValue = "{";
+                    foreach (var word in GetValueWithArgs())
+                    {
+                        luaValue = luaValue + enumDictionary[word.Key] + "(" + word.Value + ")" + ",";
+                    }
+                    luaValue = luaValue + "}";
+                    
                     break;
                 case LuaDataType.Function:
                     foreach(var word in GetValueWithArgs())
