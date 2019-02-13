@@ -122,6 +122,11 @@ namespace WpfApp1
 
         }
 
+        void CreateNode()
+        {
+
+        }
+
         public void DeleteNode(int uid)
         {
 
@@ -173,6 +178,25 @@ namespace WpfApp1
        
         void UpdateNodeView(BaseNode root,int depth)
         {
+            if (nodeDic.ContainsKey(root.GetUid()) == false)
+            {
+                Button bt = new Button
+                {
+                    Name = "test_button",
+                    Content = root.nodeName,
+                    Height = 30,
+                    Width = 100,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Margin = new Thickness(10, 10, 0, 0),
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Visibility = Visibility.Visible
+                };
+
+                NodeCanvas.Children.Add(bt);
+
+                nodeDic[root.GetUid()] = bt;
+            }
+
             nodeDic[root.GetUid()].Margin = new Thickness(10+110 * depth, 20+height, 0, 0);
 
             if (root.GetChilds().Count == 0)
@@ -264,6 +288,7 @@ namespace WpfApp1
                             MinWidth = 100,
                             MinHeight = 30
                         };
+                        int_tb.Text = property.GetValue();
                         int_tb.TextChanged += (e, a) => { property.SetValue(int_tb.Text); };
                         PropertyGrid.Children.Add(int_tb);
                         int_tb.SetValue(Grid.RowProperty, rowindex);
@@ -286,6 +311,7 @@ namespace WpfApp1
                             MinWidth = 100,
                             MinHeight = 30
                         };
+                        txt_tb.Text = property.GetValue();
                         txt_tb.TextChanged += (e, a) => { property.SetValue(txt_tb.Text); };
                         PropertyGrid.Children.Add(txt_tb);
                         txt_tb.SetValue(Grid.RowProperty, rowindex);
@@ -334,25 +360,39 @@ namespace WpfApp1
 
         private void MenuItem_Click_New(object sender, RoutedEventArgs e)
         {
-
+            dataMgr.NewFile();
         }
         private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
+            dlg.DefaultExt = ".dat";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                dataMgr.ReadFile(filename);
+                skill = dataMgr.GetCurrFile();
+                UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
+                UpdateNodeLine();
+            }
+
+            
         }
         private void MenuItem_Click_Save(object sender, RoutedEventArgs e)
         {
-
+            dataMgr.SaveFile();
         }
 
         private void MenuItem_Click_SaveAll(object sender, RoutedEventArgs e)
         {
-
+            dataMgr.SaveAllFile();
         }
 
         private void MenuItem_Click_Export(object sender, RoutedEventArgs e)
         {
-            skill.ExportLuaFile();
+            //skill.ExportLuaFile();
+            dataMgr.ExportLuaFile();
         }
     }
 }
