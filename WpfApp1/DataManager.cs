@@ -44,6 +44,27 @@ namespace WpfApp1
             currFile.ExportLuaFile();
         }
 
+        public void ExportLuaAllFile()
+        {
+            foreach(var file in allFiles)
+            {
+                file.ExportLuaFile();
+            }
+        }
+
+        public void SaveFile()
+        {
+            currFile.SaveFile();
+        }
+
+        public void SaveAllFile()
+        {
+            foreach(var file in allFiles)
+            {
+                file.SaveFile();
+            }
+        }
+
         public void ReadFile(string filePath)
         {
             //string filePath = @"D:\Ifrit1.dat";

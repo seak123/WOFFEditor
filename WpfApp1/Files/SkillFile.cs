@@ -31,6 +31,7 @@ namespace WpfApp1
 
     interface IFile
     {
+        void SaveFile();
         string ExportLuaFile();
         int RequestNodeUid();
         BaseNode GetRoot();
