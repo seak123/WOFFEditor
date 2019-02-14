@@ -130,7 +130,7 @@ namespace WpfApp1
                 nodeDic.Add(root.GetUid(), CreateNode(root.GetUid()));
             }
 
-            nodeDic[root.GetUid()].Content = root.nodeName;
+            nodeDic[root.GetUid()].Content = root.viewName;
 
             nodeDic[root.GetUid()].Margin = new Thickness(10+110 * depth, 20+height, 0, 0);
 
