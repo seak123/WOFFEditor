@@ -25,7 +25,7 @@ namespace WpfApp1
             curr.AddEnumInstance("向前", "1");
             curr.AddEnumInstance("向后", "0");
 
-            curr = new Property("轨迹类型", ViewDataType.EnumSelect, "move_type", LuaDataType.Integer, "0");
+            curr = new Property("轨迹类型", ViewDataType.EnumSelect, "move_type", LuaDataType.Integer, "1");
             properties.Add(curr);
             curr.AddEnumInstance("直线", "1");
 

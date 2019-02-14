@@ -50,8 +50,7 @@ namespace WpfApp1
             curr = new Property("技能CD", ViewDataType.IntInput, "coold", LuaDataType.Integer, "1");
             properties.Add(curr);
 
-            curr = new Property("补间以外时间", ViewDataType.IntInput, "besides_tween_time", LuaDataType.Integer, "0");
-            properties.Add(curr);
+
 
 
 

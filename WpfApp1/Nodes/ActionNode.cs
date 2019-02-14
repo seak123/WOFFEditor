@@ -22,6 +22,9 @@ namespace WpfApp1
             //inti aciton data
 
             //action
+            curr = new Property("动作文件名", ViewDataType.TextInput, "anim_name", LuaDataType.String, "");
+            properties.Add(curr);
+
             curr = new Property("动作", ViewDataType.EnumSelect, "action", LuaDataType.String,"IsAppear");
             properties.Add(curr);
             curr.AddEnumInstance("出场", "IsAppear");
@@ -49,6 +52,7 @@ namespace WpfApp1
 
             curr = new Property("补间以外时间", ViewDataType.IntInput, "besides_tween_time", LuaDataType.Integer, "0");
             properties.Add(curr);
+
 
 
 

@@ -53,50 +53,26 @@ namespace WpfApp1
             //baseRequirePath.Add("calc", "module.battle.data.skill.calculate");
         }
 
-        public int Coold
-        {
-            set;
-            get;
-        }
-
-        public int InitCoold
-        {
-            set;
-            get;
-        }
-
-        public string UnitName
-        {
-            set;
-            get;
-        }
-
-        public string SkillName
-        {
-            set;
-            get;
-        }
-
-        public ManualTarget ManualTarget
-        {
-            set;
-            get;
-        }
-
-        public PitchType PitchType
-        {
-            set;
-            get;
-        }
-
         public override void SaveFile()
         {
-            string DicrectoryPath = DataManager.GetInstance().rootPath+@"\BinaryOut\"+UnitName+@"\Skill";
+            string skillName = "";
+            string unitName = "";
+            foreach(var prop in treeRoot.GetProperties())
+            {
+                if(prop.ViewName == "技能名")
+                {
+                    skillName = prop.GetPropValue();
+                    break;
+                }
+            }
+            unitName = skillName.Substring(0,skillName.IndexOf('_'));
+
+            string DicrectoryPath = DataManager.GetInstance().rootPath+@"\BinaryOut\"+unitName+@"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)
             {
                 System.IO.Directory.CreateDirectory(DicrectoryPath);
             }
-            string filePath = DicrectoryPath + @"\" + SkillName + ".dat";
+            string filePath = DicrectoryPath + @"\" + skillName + ".dat";
             Stream fStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             BinaryFormatter binFormat = new BinaryFormatter();
 
@@ -152,12 +128,24 @@ namespace WpfApp1
 
 
             //export lua file
-            string DicrectoryPath = DataManager.GetInstance().rootPath + @"\LuaOut\" + UnitName + @"\Skill";
+            string skillName = "";
+            string unitName = "";
+            foreach (var prop in treeRoot.GetProperties())
+            {
+                if (prop.ViewName == "技能名")
+                {
+                    skillName = prop.GetPropValue();
+                    break;
+                }
+            }
+            unitName = skillName.Substring(0, skillName.IndexOf('_'));
+
+            string DicrectoryPath = DataManager.GetInstance().rootPath + @"\LuaOut\" + unitName + @"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)
             {
                 System.IO.Directory.CreateDirectory(DicrectoryPath);
             }
-            string filePath = DicrectoryPath + @"\" + SkillName + ".lua";
+            string filePath = DicrectoryPath + @"\" + skillName + ".lua";
           
             File.WriteAllText(filePath, stream);
 
