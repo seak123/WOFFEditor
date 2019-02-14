@@ -102,28 +102,7 @@ namespace WpfApp1
 
         void CreateRootNode()
         {
-            Button btRoot = new Button
-            {
-                Name = "root_button",
-                Content = "Root",
-                Height = 30,
-                Width = 100,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(10, 20, 0, 0),
-                VerticalAlignment = VerticalAlignment.Top,
-                Visibility = Visibility.Visible
-            };
-
-            NodeCanvas.Children.Add(btRoot);
-
-            nodeDic.Add(skill.GetRoot().GetUid(), btRoot);
-
-            btRoot.ContextMenu = nodeViewMenu;
-            btRoot.MouseRightButtonUp += (s, e) => { currentSelectNodeUID = skill.GetRoot().GetUid(); };
-            btRoot.Click += (e, a) => {
-                //NodeName.Text = skill.GetRoot().GetUid().ToString();
-                currentSelectNodeUID = skill.GetRoot().GetUid();
-            };
+            nodeDic.Add(skill.GetRoot().GetUid(), CreateNode(skill.GetRoot().GetUid()));
         }
 
         void CreateContextMenu()
@@ -323,12 +302,16 @@ namespace WpfApp1
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             dlg.DefaultExt = ".dat";
+            dlg.Filter = "技能文件(*.dat)|*dat";
             Nullable<bool> result = dlg.ShowDialog();
             if (result == true)
             {
                 string filename = dlg.FileName;
                 dataMgr.ReadFile(filename);
                 skill = dataMgr.GetCurrFile();
+
+                NodeCanvas.Children.Clear();
+                nodeDic.Clear();
                 UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
                 UpdateNodeLine();
             }
