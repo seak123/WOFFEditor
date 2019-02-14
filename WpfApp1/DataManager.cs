@@ -21,22 +21,27 @@ namespace WpfApp1
         {
             allFiles = new List<IFile>();
             fileUid = 0;
-            string FilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Settings.dat";
            
             BinaryFormatter binFormat = new BinaryFormatter();
+            EditorSettings settings;
 
-            
+            string FilePath = "Settings.bin";
+           
             if (System.IO.File.Exists(FilePath) == false)
             {
-                Stream _Stream = new FileStream(FilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                binFormat.Serialize(_Stream, new EditorSettings());
+                using (var file = File.Create("Settings.bin"))
+                {
+                    settings = new EditorSettings();
+                    binFormat.Serialize(file, settings);
+                }
+         
             }
-            Stream fStream = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite);
-            EditorSettings settings = (EditorSettings)binFormat.Deserialize(fStream);
-            if (settings == null)
+            else
             {
-                //alert
+                Stream fStream = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite);
+                settings = (EditorSettings)binFormat.Deserialize(fStream);
             }
+      
             //init settings
             rootPath = settings.rootPath;
         }
