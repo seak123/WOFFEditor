@@ -54,44 +54,7 @@ namespace WpfApp1
             return null;
         }
 
-        //view node change
-        private BaseNode NodeCreator(NodeType type)
-        {
-            BaseNode node = null;
-            switch (type)
-            {
-                case NodeType.Action:
-                    node = new ActionNode(this);
-                    break;
-                case NodeType.Buff:
-                    node = new BuffNode(this);
-                    break;
-                case NodeType.Caster:
-                    node = new CasterNode(this);
-                    break;
-                case NodeType.Chain:
-                    node = new ChainNode(this);
-                    break;
-                case NodeType.Move:
-                    node = new MoveNode(this);
-                    break;
-                case NodeType.Damage:
-                    node = new DamageNode(this);
-                    break;
-                //misc Node
-                case NodeType.Queue:
-                    node = new MiscNode(this, MiscType.Queue);
-                    break;
-                case NodeType.Wait:
-                    node = new MiscNode(this, MiscType.Wait);
-                    break;
-                case NodeType.Terminal:
-                    node = new MiscNode(this, MiscType.Terminal);
-                    break;
-               
-            }
-            return node;
-        }
+        
         //delete node
         public void DeleteNode(int uid)
         {
@@ -105,7 +68,7 @@ namespace WpfApp1
         //replace node
         public void ReplaceNode(NodeType type,int uid)
         {
-            BaseNode newNode = NodeCreator(type);
+            BaseNode newNode = BaseNode.NodeCreator(type,this);
             BaseNode oldNode = FindNode(uid);
             BaseNode parentNode = oldNode.GetParent();
             if(oldNode != null)
@@ -129,21 +92,21 @@ namespace WpfApp1
         // add child
         public int AddChildNode(NodeType type, int parentUid)
         {
-            BaseNode node = NodeCreator(type);
+            BaseNode node = BaseNode.NodeCreator(type, this);
             FindNode(parentUid).AddChildNode(node);
             return node.GetUid();
         }
         // add brother
         public int AddBrotherAbove(NodeType type, int parentUid)
         {
-            BaseNode node = NodeCreator(type);
+            BaseNode node = BaseNode.NodeCreator(type, this);
             FindNode(parentUid).AddBrotherAbove(node);
             return node.GetUid();
         }
 
         public int AddBrotherBelow(NodeType type,int parentUid)
         {
-            BaseNode node = NodeCreator(type);
+            BaseNode node = BaseNode.NodeCreator(type, this);
             FindNode(parentUid).AddBrotherBelow(node);
             return node.GetUid();
         }
@@ -162,6 +125,37 @@ namespace WpfApp1
             if (node != null)
             {
                 node.ShiftDown();
+            }
+        }
+
+        //refresh node
+        public void RefreshNodes()
+        {
+            List<BaseNode> cacheQue = new List<BaseNode>();
+
+            BaseNode newRoot = BaseNode.NodeCreator(treeRoot.GetNodeType(), this);
+            newRoot.RebuildNode(treeRoot);
+            treeRoot = newRoot;
+
+            cacheQue.Add(treeRoot);
+
+            while (cacheQue.Count > 0)
+            {
+                BaseNode currNode = cacheQue[0];
+                List<BaseNode> newChilds = new List<BaseNode>();
+                foreach(var child in currNode.GetChilds())
+                {
+                    BaseNode node = BaseNode.NodeCreator(child.GetNodeType(), this);
+                    node.RebuildNode(child);
+                    newChilds.Add(node);
+                }
+                currNode.DeleteAllChildNode();
+                foreach(var newNode in newChilds)
+                {
+                    currNode.AddChildNode(newNode);
+                    cacheQue.Add(newNode);
+                }
+                cacheQue.RemoveAt(0);
             }
         }
 

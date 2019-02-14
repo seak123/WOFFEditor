@@ -129,6 +129,26 @@ namespace WpfApp1
            
         }
 
+        public void RebuildNode(BaseNode oldNode)
+        {
+            nodeName = oldNode.nodeName;
+            viewName = oldNode.viewName;
+            executePath = oldNode.executePath;
+            for(int index = 0;index<properties.Count;++index)
+            {
+                string key = properties[index].ViewName;
+                foreach(Property oldprop in oldNode.GetProperties())
+                {
+                    if (oldprop.ViewName == key) { properties[index] = new Property(oldprop); break; }
+                }
+            }
+            parentNode = oldNode.GetParent();
+            foreach(var node in oldNode.GetChilds())
+            {
+                AddChildNode(node);
+            }
+        }
+
         private bool ContainSpecialProp(PropertyType type)
         {
             foreach (var prop in properties)
@@ -225,6 +245,11 @@ namespace WpfApp1
             }
         }
 
+        public void DeleteAllChildNode()
+        {
+            childNodes.Clear();
+        }
+
         public void AddChildNode(BaseNode child,int index = -1)
         {
             if (index == -1)
@@ -269,6 +294,47 @@ namespace WpfApp1
             if (index == brothers.Count-1) return;
             brothers.RemoveAt(index);
             brothers.Insert(index + 1, this);
+        }
+
+        public static BaseNode NodeCreator(NodeType type,IFile file)
+        {
+            BaseNode node = null;
+            switch (type)
+            {
+                case NodeType.Action:
+                    node = new ActionNode(file);
+                    break;
+                case NodeType.Buff:
+                    node = new BuffNode(file);
+                    break;
+                case NodeType.Caster:
+                    node = new CasterNode(file);
+                    break;
+                case NodeType.Chain:
+                    node = new ChainNode(file);
+                    break;
+                case NodeType.Move:
+                    node = new MoveNode(file);
+                    break;
+                case NodeType.Damage:
+                    node = new DamageNode(file);
+                    break;
+                //misc Node
+                case NodeType.Queue:
+                    node = new MiscNode(file, MiscType.Queue);
+                    break;
+                case NodeType.Wait:
+                    node = new MiscNode(file, MiscType.Wait);
+                    break;
+                case NodeType.Terminal:
+                    node = new MiscNode(file, MiscType.Terminal);
+                    break;
+                case NodeType.Skill:
+                    node = new SkillNode(file);
+                    break;
+
+            }
+            return node;
         }
     }
 }

@@ -47,6 +47,17 @@ namespace WpfApp1
             
         }
 
+        public Property(Property prop)
+        {
+            ViewName = prop.ViewName;
+            ViewType = prop.ViewType;
+            LuaName = prop.LuaName;
+            LuaDataType = prop.LuaDataType;
+            propValue = prop.GetPropValue();
+            PropType = prop.PropType;
+            enumDictionary = new Dictionary<string, string>(prop.enumDictionary);
+        }
+
         public void AddEnumInstance(string key,string value)
         {
             enumDictionary.Add(key, value);

@@ -76,6 +76,7 @@ namespace WpfApp1
                 //alert
             }
             newFile.ResetUid(fileUid++);
+            newFile.RefreshNodes();
             allFiles.Add(newFile);
             currFile = newFile;
         }
