@@ -8,12 +8,37 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WpfApp1
 {
+    [Serializable]
+    class EditorSettings
+    {
+        //export path
+        public string rootPath = @"D:\WOFFEditor";
+    }
+
     class DataManager
     {
         private DataManager()
         {
             allFiles = new List<IFile>();
             fileUid = 0;
+            string FilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Settings.dat";
+           
+            BinaryFormatter binFormat = new BinaryFormatter();
+
+            
+            if (System.IO.File.Exists(FilePath) == false)
+            {
+                Stream _Stream = new FileStream(FilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                binFormat.Serialize(_Stream, new EditorSettings());
+            }
+            Stream fStream = new FileStream(FilePath, FileMode.Open, FileAccess.ReadWrite);
+            EditorSettings settings = (EditorSettings)binFormat.Deserialize(fStream);
+            if (settings == null)
+            {
+                //alert
+            }
+            //init settings
+            rootPath = settings.rootPath;
         }
 
         public static DataManager GetInstance()
@@ -90,7 +115,7 @@ namespace WpfApp1
             return null;
         }
 
-        public string rootPath = @"D:\";
+        public string rootPath;
 
         private static DataManager instance;
         private IFile currFile;
