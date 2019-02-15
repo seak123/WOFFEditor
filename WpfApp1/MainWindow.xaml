@@ -7,32 +7,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-	<DockPanel>
-		<Menu DockPanel.Dock="Top">
-			<MenuItem Header="File" FontSize="14">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File" FontSize="14">
                 <MenuItem Header="New" FontSize="12" Click="MenuItem_Click_New"></MenuItem>
                 <MenuItem Header="Open" FontSize="12" Click="MenuItem_Click_Open"></MenuItem>
                 <MenuItem Header="Save" FontSize="12" Click="MenuItem_Click_Save"></MenuItem>
                 <MenuItem Header="Save All" FontSize="12" Click="MenuItem_Click_SaveAll"></MenuItem>
                 <MenuItem Header="Export" FontSize="12" Click="MenuItem_Click_Export"></MenuItem>
-			</MenuItem>
-		</Menu>
-	
-		<Grid Margin="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="120*"/>
-				<ColumnDefinition Width="40*"/>
-			</Grid.ColumnDefinitions>
+            </MenuItem>
+        </Menu>
+
+        <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120*"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
 
 
 
-			<GridSplitter Width="5" Panel.ZIndex="1" Margin="0"/>
-			<Canvas x:Name="NodeCanvas" Margin="0" Background="#FFEAE1E1"/>
+            <GridSplitter Width="5" Panel.ZIndex="1" Margin="0"/>
+            <Canvas x:Name="NodeCanvas" Margin="0" Background="#FFEAE1E1"/>
             <Grid x:Name="PropertyGrid" Grid.Column="1" Margin="0,3,0,0" ShowGridLines="False"/>
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1.5"/>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="LightGray" BorderThickness="1.5"/>
 
         </Grid>
-	</DockPanel>
+    </DockPanel>
 
-	
+
 </Window>
