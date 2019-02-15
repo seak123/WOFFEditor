@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace WpfApp1
 {
@@ -31,7 +33,7 @@ namespace WpfApp1
 
         int height = 0;
 
-        List<Path> paths;
+        List<System.Windows.Shapes.Path> paths;
 
         public MainWindow()
         {
@@ -45,13 +47,14 @@ namespace WpfApp1
 
             nodeDic = new Dictionary<int, Button>();
 
-            paths = new List<Path>();
+            paths = new List<System.Windows.Shapes.Path>();
             #endregion
 
             CreateContextMenu();
 
             CreateRootNode();
 
+            LoadDirectory();
             
         }
 
@@ -269,7 +272,7 @@ namespace WpfApp1
                 line1.StartPoint = start;
                 line1.EndPoint = turn;
 
-                Path pt1 = new Path();
+                System.Windows.Shapes.Path pt1 = new System.Windows.Shapes.Path();
                 pt1.Stroke = Brushes.Black;
                 pt1.StrokeThickness = 1;
                 pt1.Data = line1;
@@ -283,7 +286,7 @@ namespace WpfApp1
             line2.StartPoint = turn;
             line2.EndPoint = end;
 
-            Path pt2 = new Path();
+            System.Windows.Shapes.Path pt2 = new System.Windows.Shapes.Path();
             pt2.Stroke = Brushes.Black;
             pt2.StrokeThickness = 1;
             pt2.Data = line2;
@@ -307,17 +310,24 @@ namespace WpfApp1
             if (result == true)
             {
                 string filename = dlg.FileName;
-                dataMgr.ReadFile(filename);
-                skill = dataMgr.GetCurrFile();
 
-                NodeCanvas.Children.Clear();
-                nodeDic.Clear();
-                UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
-                UpdateNodeLine();
+                ReadFile(filename);
             }
 
             
         }
+
+        public void ReadFile(string filePath)
+        {
+            dataMgr.ReadFile(filePath);
+            skill = dataMgr.GetCurrFile();
+
+            NodeCanvas.Children.Clear();
+            nodeDic.Clear();
+            UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
+            UpdateNodeLine();
+        }
+
         private void MenuItem_Click_Save(object sender, RoutedEventArgs e)
         {
             dataMgr.SaveFile();
@@ -333,5 +343,84 @@ namespace WpfApp1
             //skill.ExportLuaFile();
             dataMgr.ExportLuaFile();
         }
+
+
+        private void LoadDirectory()
+        {
+            
+                var item = new TreeViewItem();
+                item.Header ="D:\\WOFFEditor";
+                item.Tag = "D:\\WOFFEditor";
+                item.Items.Add(null);
+
+                item.Expanded += Folder_Expanded;
+                FolderView.Items.Add(item);
+            
+        }
+
+        private void Folder_Expanded(object sender, RoutedEventArgs e)
+        {
+            var item = (TreeViewItem)sender;
+            if (item.Items.Count != 1 || item.Items[0] != null)
+                return;
+
+            item.Items.Clear();
+
+            var fullPath = (string)item.Tag;
+            
+            try {
+                foreach (var directoryPath in Directory.GetDirectories(fullPath))
+                {
+                    var dir = new TreeViewItem {
+                        Header = GetFileFolderName(directoryPath),
+                        Tag = directoryPath,
+                    };
+                    dir.Items.Add(null);
+                    dir.Expanded += Folder_Expanded;
+                    item.Items.Add(dir);
+
+                }
+                foreach (var filePath in Directory.GetFiles(fullPath))
+                {
+                    var file = new TreeViewItem
+                    {
+                        Header = GetFileFolderName(filePath),
+                        Tag = filePath,
+                    };
+                    file.Expanded += File_Expanded;
+                    item.Items.Add(file);
+                }
+            }
+            catch { }
+        }
+
+        private void File_Expanded(object sender, RoutedEventArgs e)
+        {
+            var file = (TreeViewItem)sender;
+            //dataMgr.ReadFile((string)file.Tag);
+            ReadFile((string)file.Tag);
+        }
+
+        public static string GetFileFolderName(string path)
+        {
+            // If we have no path, return empty
+            if (string.IsNullOrEmpty(path))
+                return string.Empty;
+
+            // Make all slashes back slashes
+            var normalizedPath = path.Replace('/', '\\');
+
+            // Find the last backslash in the path
+            var lastIndex = normalizedPath.LastIndexOf('\\');
+
+            // If we don't find a backslash, return the path itself
+            if (lastIndex <= 0)
+                return path;
+
+            // Return the name after the last back slash
+            return path.Substring(lastIndex + 1);
+        }
     }
+   
+    
 }
