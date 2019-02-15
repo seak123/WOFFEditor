@@ -65,7 +65,8 @@ namespace WpfApp1
                     break;
                 }
             }
-            unitName = skillName.Substring(0,skillName.IndexOf('_'));
+
+            unitName = skillName.Substring(0,skillName.IndexOf('_')==-1?0: skillName.IndexOf('_'));
 
             string DicrectoryPath = DataManager.GetInstance().rootPath+@"\BinaryOut\"+unitName+@"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)
@@ -138,7 +139,7 @@ namespace WpfApp1
                     break;
                 }
             }
-            unitName = skillName.Substring(0, skillName.IndexOf('_'));
+            unitName = skillName.Substring(0, skillName.IndexOf('_') == -1 ? 0 : skillName.IndexOf('_'));
 
             string DicrectoryPath = DataManager.GetInstance().rootPath + @"\LuaOut\" + unitName + @"\Skill";
             if (System.IO.Directory.Exists(DicrectoryPath) == false)

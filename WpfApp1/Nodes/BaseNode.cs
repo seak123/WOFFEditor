@@ -56,6 +56,7 @@ namespace WpfApp1
 
         //root Node
         Skill = 100,
+        Trigger = 101,
     }
 
     [Serializable]

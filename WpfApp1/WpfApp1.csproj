@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Files\BaseFile.cs" />
+    <Compile Include="Files\TriggerFile.cs" />
     <Compile Include="Nodes\BuffNode.cs" />
     <Compile Include="Nodes\CasterNode.cs" />
     <Compile Include="DataManager.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Nodes\MoveNode.cs" />
     <Compile Include="Nodes\PropertyNode.cs" />
     <Compile Include="Nodes\ShieldNode.cs" />
+    <Compile Include="Nodes\TriggherNode.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Files\SkillFile.cs" />
     <Compile Include="Nodes\SkillNode.cs" />

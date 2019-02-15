@@ -100,10 +100,20 @@ namespace WpfApp1
             //string filePath = @"D:\Ifrit1.dat";
             Stream fStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
             BinaryFormatter binFormat = new BinaryFormatter();
-            SkillFile newFile = (SkillFile)binFormat.Deserialize(fStream);
+            SkillFile newFile = null;
+            try
+            {
+                newFile = (SkillFile)binFormat.Deserialize(fStream);
+            }
+            catch
+            {
+
+            }
+            
             if(newFile == null)
             {
                 //alert
+                return;
             }
             newFile.ResetUid(fileUid++);
             newFile.RefreshNodes();

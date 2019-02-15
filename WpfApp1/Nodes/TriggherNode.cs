@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace WpfApp1
 {
     [Serializable]
-    class SkillNode:BaseNode
+    class TriggherNode:BaseNode
     {
-        public SkillNode(IFile file)
+        public TriggherNode(IFile file)
         {
-            nodeName = "skill";
+            nodeName = "trigger";
             viewName = nodeName;
-            type = NodeType.Skill;
-            executePath = "module.battle.data.skill.skill_vo";
+            type = NodeType.Trigger;
+            executePath = "module.battle.data.skill.trigger_vo";
             sourceFile = file;
             uid = sourceFile.RequestNodeUid();
 
@@ -22,10 +22,10 @@ namespace WpfApp1
             //inti aciton data
 
             //skill
-            curr = new Property("技能名", ViewDataType.TextInput, "name", LuaDataType.String, "None_0");
+            curr = new Property("被动技能名", ViewDataType.TextInput, "name", LuaDataType.String, "None_0");
             properties.Add(curr);
 
-            curr = new Property("目标类型", ViewDataType.EnumSelect, "manual_target", LuaDataType.Integer, "0");
+            curr = new Property("触发类型", ViewDataType.EnumSelect, "manual_target", LuaDataType.Integer, "0");
             properties.Add(curr);
             curr.AddEnumInstance("自己", "0");
             curr.AddEnumInstance("单个敌方", "1");
