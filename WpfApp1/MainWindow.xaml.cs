@@ -205,7 +205,8 @@ namespace WpfApp1
                         {
                             Width = 100,
                             Height = 30,
-                            
+                            VerticalAlignment = VerticalAlignment.Top,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             ItemsSource = property.enumDictionary,
                             
                         };
@@ -224,7 +225,9 @@ namespace WpfApp1
                         TextBox int_tb = new TextBox
                         {
                             MinWidth = 100,
-                            MinHeight = 30
+                            MinHeight = 30,
+                            VerticalAlignment = VerticalAlignment.Top,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                         };
                         int_tb.Text = property.GetValue();
                         int_tb.TextChanged += (e, a) => { property.SetValue(int_tb.Text); };
@@ -233,27 +236,154 @@ namespace WpfApp1
                         int_tb.SetValue(Grid.ColumnProperty, 1);
                         break;
                     case ViewDataType.ListSelectWithArgs:
-                        TextBox temp = new TextBox
-                        {
-                            MinWidth = 100,
-                            MinHeight = 30
-                        };
 
-                        PropertyGrid.Children.Add(temp);
-                        temp.SetValue(Grid.RowProperty, rowindex);
-                        temp.SetValue(Grid.ColumnProperty, 1);
+                        Grid subGrid = new Grid
+                        {
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                        };
+                        PropertyGrid.Children.Add(subGrid);
+                        subGrid.ShowGridLines = true;
+                        subGrid.SetValue(Grid.RowProperty, rowindex);
+                        subGrid.SetValue(Grid.ColumnProperty, 1);
+
+                        
+                        Dictionary<string,string> selectList = property.GetValueWithArgs();
+
+                        int sub_rowIndex = 0;
+                        foreach (var select in property.enumDictionary)
+                        {
+                            subGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                            CheckBox check = new CheckBox {
+                                IsChecked = selectList.ContainsKey(select.Key),
+                                Width = 30,
+                                Height = 30,
+                                Margin = new Thickness(10, 10, 0, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                            };
+                            subGrid.Children.Add(check);
+                            check.SetValue(Grid.RowProperty, sub_rowIndex);
+
+                            Canvas.SetZIndex(check, 3);
+                            TextBlock nameText = new TextBlock
+                            {
+                                Text = select.Key,
+                                Width = 100,
+                                Height = 30,
+                                Margin = new Thickness(50, 10, 0, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                TextAlignment = TextAlignment.Left,
+                            };
+
+                            subGrid.Children.Add(nameText);
+                            nameText.SetValue(Grid.RowProperty, sub_rowIndex);
+
+
+                            TextBox valueText = new TextBox
+                            {
+                                Text = selectList.ContainsKey(select.Key) ? selectList[select.Key] : "",
+                                Width = 100,
+                                Height = 30,
+                                Margin = new Thickness(110, 10, 0, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                Visibility = Visibility.Hidden,
+                                TextAlignment = TextAlignment.Left,
+                            };
+
+                            subGrid.Children.Add(valueText);
+                            valueText.SetValue(Grid.RowProperty, sub_rowIndex);
+
+                           
+
+                            check.Checked += (e, a) => {
+                                valueText.Text = "";
+                                valueText.Visibility = Visibility.Visible;
+                            };
+                            check.Unchecked += (e, a) =>
+                            {
+                                valueText.Text = "";
+                                valueText.Visibility = Visibility.Hidden;
+                                selectList.Remove(select.Key);
+                            };
+
+                            valueText.TextChanged += (e, a) =>
+                            {
+                                property.SetValue(select.Key, valueText.Text);
+                            };
+
+                            sub_rowIndex++;
+                        }
+
                         break;
                     case ViewDataType.TextInput:
                         TextBox txt_tb = new TextBox
                         {
                             MinWidth = 100,
-                            MinHeight = 30
+                            MinHeight = 30,
+                            VerticalAlignment = VerticalAlignment.Top,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                         };
                         txt_tb.Text = property.GetValue();
                         txt_tb.TextChanged += (e, a) => { property.SetValue(txt_tb.Text); };
                         PropertyGrid.Children.Add(txt_tb);
                         txt_tb.SetValue(Grid.RowProperty, rowindex);
                         txt_tb.SetValue(Grid.ColumnProperty, 1);
+                        break;
+                    case ViewDataType.EnumSelectWithArgs:
+                        Dictionary<string, string> selectEnum = property.GetValueWithArgs();
+
+                        foreach (var select in selectEnum)
+                        {
+                            ComboBox subCb = new ComboBox
+                            {
+                                Width = 100,
+                                Height = 30,
+                                ItemsSource = property.enumDictionary,
+                                Margin= new Thickness(0),
+                                VerticalAlignment = VerticalAlignment.Top,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                            };
+
+                            TextBox subText = new TextBox {
+                                Width = 100,
+                                Height = 30,
+                                Margin = new Thickness(110,0,0,0),
+                                VerticalAlignment = VerticalAlignment.Top,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                //VerticalAlignment = VerticalAlignment.Center,
+
+                            };
+
+                            subCb.SelectedValuePath = "Key";
+                            subCb.DisplayMemberPath = "Key";
+
+                            subCb.SelectedValue = selectEnum.First().Key;
+                            subText.Text = selectEnum.First().Value;
+
+
+                            subCb.SelectionChanged += (e, a) =>
+                            {
+                                
+                                property.SetValue(subCb.SelectedValue.ToString());
+                                selectEnum = property.GetValueWithArgs();
+                                subText.Text = selectEnum.First().Value;
+                            };
+
+                            subText.TextChanged += (e, a) => { property.SetValue(subCb.SelectedValue.ToString(),subText.Text); };
+
+
+                            PropertyGrid.Children.Add(subCb);
+                            PropertyGrid.Children.Add(subText);
+
+                            subCb.SetValue(Grid.RowProperty, rowindex);
+                            subCb.SetValue(Grid.ColumnProperty, 1);
+                            subText.SetValue(Grid.RowProperty, rowindex);
+                            subText.SetValue(Grid.ColumnProperty, 1);
+                        }
                         break;
                         
                 }
@@ -347,15 +477,19 @@ namespace WpfApp1
 
         private void LoadDirectory()
         {
-            
-                var item = new TreeViewItem();
-                item.Header ="D:\\WOFFEditor";
-                item.Tag = "D:\\WOFFEditor";
-                item.Items.Add(null);
+            string DirectoryRoot = "D:\\WOFFEditor";
+            if (!Directory.Exists(DirectoryRoot))
+            {
+                Directory.CreateDirectory(DirectoryRoot);
+            }
+            var item = new TreeViewItem();
+            item.Header = DirectoryRoot;
+            item.Tag = DirectoryRoot;
+            item.Items.Add(null);
 
-                item.Expanded += Folder_Expanded;
-                FolderView.Items.Add(item);
-            
+            item.Expanded += Folder_Expanded;
+            FolderView.Items.Add(item);
+
         }
 
         private void Folder_Expanded(object sender, RoutedEventArgs e)

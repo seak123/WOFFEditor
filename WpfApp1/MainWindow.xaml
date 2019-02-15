@@ -38,12 +38,12 @@
 						</Setter>
 					</Style>
 				</TreeView.Resources>
-				
+
 			</TreeView>
 			<GridSplitter Width="3" Panel.ZIndex="1" Margin="0"/>
 			<GridSplitter Width="3" Panel.ZIndex="1" Margin="0" Grid.Column="1"/>
 			<Canvas x:Name="NodeCanvas" Background="#FFEAE1E1" ScrollViewer.CanContentScroll="True" Grid.Column="1">
-				
+
 			</Canvas>
 			<Grid x:Name="PropertyGrid" Grid.Column="2" Margin="0,3,0,0" ShowGridLines="True"/>
 
