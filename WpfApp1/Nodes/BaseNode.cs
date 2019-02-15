@@ -22,37 +22,37 @@ namespace WpfApp1
         Chain = 3,
         Damage = 4,
         Move = 5,
+        Property = 6,
+        Shield = 7,
 
         //misc node
-        //Ap = 50,
-        //Delay = 51,
+        Ap = 50,
+        Delay = 51,
         Wait = 52,
-        //Hide = 53,
+        Hide = 53,
         Queue = 54,
         Terminal = 55,
-        //ReAct = 56,
-        //RetargetAll = 57,
-        //RetargetMain = 58,
-        //Revive = 59,
-        //Interrupt = 60,
-        //State = 61,
-        //Steady = 62,
-        //KeepAlive = 63,
-        //MirageDie = 64,
-        //Undying = 65,
-        //Death = 66,
-        //Relief = 67,
-        //Phase = 68,
-        //Yield = 69,
-        //Sync = 70,
-        //Hurt = 71,
-        //CommonBuff = 72,
-        //Rotate = 73,
-        //Split = 74,
-        //SceneReset = 75,
-        //Camera = 76,
-        //Audio = 77,
-        //TapWord = 78,
+        ReAct = 56,
+        RetargetAll = 57,
+        RetargetMain = 58,
+      
+        Interrupt = 60,
+        State = 61,
+        Steady = 62,
+        KeepAlive = 63,
+        MirageDie = 64,
+        Undying = 65,
+        Death = 66,
+        Relief = 67,
+        Phase = 68,
+        Yield = 69,
+       
+        CommonBuff = 72,
+        
+        SceneReset = 75,
+        Camera = 76,
+        Audio = 77,
+       
 
         //root Node
         Skill = 100,
@@ -195,6 +195,7 @@ namespace WpfApp1
                     curr.AddEnumInstance("无", "none");
                     curr.AddEnumInstance("Add时", "on_buff_add");
                     curr.AddEnumInstance("Tick时", "on_tick");
+                    curr.AddEnumInstance("受到伤害前", "prev_damaged");
 
                     curr = new Property("触发条件", ViewDataType.ListSelectWithArgs, "checkers", LuaDataType.ListFunction, "",PropertyType.Buff);
                     properties.Add(curr);
@@ -319,12 +320,78 @@ namespace WpfApp1
                 case NodeType.Damage:
                     node = new DamageNode(file);
                     break;
+                case NodeType.Property:
+                    node = new PropertyNode(file);
+                    break;
+                case NodeType.Shield:
+                    node = new ShieldNode(file);
+                    break;
                 //misc Node
-                case NodeType.Queue:
-                    node = new MiscNode(file, MiscType.Queue);
+                case NodeType.Ap:
+                    node = new MiscNode(file, MiscType.Ap);
+                    break;
+                case NodeType.Audio:
+                    node = new MiscNode(file, MiscType.Audio);
+                    break;
+                case NodeType.Camera:
+                    node = new MiscNode(file, MiscType.Camera);
+                    break;
+                case NodeType.CommonBuff:
+                    node = new MiscNode(file, MiscType.CommonBuff);
+                    break;
+                case NodeType.Death:
+                    node = new MiscNode(file, MiscType.Death);
+                    break;
+                case NodeType.Delay:
+                    node = new MiscNode(file, MiscType.Delay);
+                    break;
+                case NodeType.Hide:
+                    node = new MiscNode(file, MiscType.Hide);
+                    break;
+                case NodeType.Interrupt:
+                    node = new MiscNode(file, MiscType.Interrupt);
+                    break;
+                case NodeType.KeepAlive:
+                    node = new MiscNode(file, MiscType.KeepAlive);
+                    break;
+                case NodeType.MirageDie:
+                    node = new MiscNode(file, MiscType.MirageDie);
+                    break;
+                case NodeType.Phase:
+                    node = new MiscNode(file, MiscType.Phase);
+                    break;
+                case NodeType.ReAct:
+                    node = new MiscNode(file, MiscType.ReAct);
+                    break;
+                case NodeType.Relief:
+                    node = new MiscNode(file, MiscType.Relief);
+                    break;
+                case NodeType.RetargetAll:
+                    node = new MiscNode(file, MiscType.RetargetAll);
+                    break;
+                case NodeType.RetargetMain:
+                    node = new MiscNode(file, MiscType.RetargetMain);
+                    break;
+                case NodeType.SceneReset:
+                    node = new MiscNode(file, MiscType.SceneReset);
+                    break;
+                case NodeType.State:
+                    node = new MiscNode(file, MiscType.State);
+                    break;
+                case NodeType.Steady:
+                    node = new MiscNode(file, MiscType.Steady);
+                    break;
+                case NodeType.Undying:
+                    node = new MiscNode(file, MiscType.Undying);
                     break;
                 case NodeType.Wait:
                     node = new MiscNode(file, MiscType.Wait);
+                    break;
+                case NodeType.Yield:
+                    node = new MiscNode(file, MiscType.Yield);
+                    break;
+                case NodeType.Queue:
+                    node = new MiscNode(file, MiscType.Queue);
                     break;
                 case NodeType.Terminal:
                     node = new MiscNode(file, MiscType.Terminal);

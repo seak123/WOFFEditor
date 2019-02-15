@@ -62,6 +62,8 @@
     <Compile Include="Nodes\DamageNode.cs" />
     <Compile Include="Nodes\MiscNode.cs" />
     <Compile Include="Nodes\MoveNode.cs" />
+    <Compile Include="Nodes\PropertyNode.cs" />
+    <Compile Include="Nodes\ShieldNode.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Files\SkillFile.cs" />
     <Compile Include="Nodes\SkillNode.cs" />

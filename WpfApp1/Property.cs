@@ -193,6 +193,12 @@ namespace WpfApp1
                         luaValue = enumDictionary[word.Key] + "(" + word.Value + ")";
                     }
                     break;
+                case LuaDataType.Skill:
+                    string skillName = propValue;
+                    string unitName = skillName.Substring(0, skillName.IndexOf('_'));
+
+                    luaValue = "require(\"" + "module.battle.config.fighter_config." + unitName + ".skill." + skillName + ")";
+                    break;
             }
             return argName + " = " + luaValue;
         }
