@@ -290,7 +290,7 @@ namespace WpfApp1
                                 Margin = new Thickness(110, 10, 0, 0),
                                 VerticalAlignment = VerticalAlignment.Center,
                                 HorizontalAlignment = HorizontalAlignment.Left,
-                                Visibility = Visibility.Hidden,
+                                Visibility = selectList.ContainsKey(select.Key)? Visibility.Visible :Visibility.Hidden,
                                 TextAlignment = TextAlignment.Left,
                             };
 
