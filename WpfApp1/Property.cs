@@ -15,7 +15,8 @@ namespace WpfApp1
         ListFunction,
         ListInt,
         Function,
-        Skill
+        Skill,
+        Vector2
     }
 
     public enum ViewDataType
@@ -204,6 +205,9 @@ namespace WpfApp1
                     string unitName = skillName.Substring(0, skillName.IndexOf('_'));
 
                     luaValue = "require(\"" + "module.battle.config.fighter_config." + unitName + ".skill." + skillName + ")";
+                    break;
+                case LuaDataType.Vector2:
+                    luaValue = "{" + propValue + "}";
                     break;
             }
             return argName + " = " + luaValue;

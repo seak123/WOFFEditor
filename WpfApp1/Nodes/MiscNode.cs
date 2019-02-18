@@ -273,7 +273,7 @@ namespace WpfApp1
             stream = stream + "\n";
             foreach (var child in childNodes)
             {
-                stream = stream + child.ExportLuaStream();
+                stream = child.ExportLuaStream() + stream;
             }
             return stream;
         }
