@@ -140,7 +140,7 @@ namespace WpfApp1
                 string key = properties[index].ViewName;
                 foreach(Property oldprop in oldNode.GetProperties())
                 {
-                    if (oldprop.ViewName == key) { properties[index] = new Property(oldprop); break; }
+                    if (oldprop.ViewName == key) { properties[index].RebuildProp(oldprop); break; }
                 }
             }
             parentNode = oldNode.GetParent();
@@ -205,7 +205,6 @@ namespace WpfApp1
                     curr.AddEnumInstance("触发层数", "check_stack");
                     curr.AddEnumInstance("击杀目标", "check_death");
                     curr.AddEnumInstance("AP值触发", "check_ap");
-
                 }
             }
         }

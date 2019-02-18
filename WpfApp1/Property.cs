@@ -47,7 +47,7 @@ namespace WpfApp1
             
         }
 
-        public Property(Property prop)
+        public void RebuildProp(Property prop)
         {
             ViewName = prop.ViewName;
             ViewType = prop.ViewType;
@@ -55,7 +55,7 @@ namespace WpfApp1
             LuaDataType = prop.LuaDataType;
             propValue = prop.GetPropValue();
             PropType = prop.PropType;
-            enumDictionary = new Dictionary<string, string>(prop.enumDictionary);
+            //enumDictionary = new Dictionary<string, string>(prop.enumDictionary);
         }
 
         public void AddEnumInstance(string key,string value)
@@ -65,24 +65,29 @@ namespace WpfApp1
 
         public string ViewName {
             get;
+            set;
         }
 
         public ViewDataType ViewType {
             get;
+            set;
         }
 
         public string LuaName
         {
             get;
+            set;
         }
 
         public LuaDataType LuaDataType
         {
             get;
+            set;
         }
 
         public PropertyType PropType {
             get;
+            set;
         }
         
 
@@ -105,11 +110,12 @@ namespace WpfApp1
                     if (propValue.Contains(value))
                     {
                         int index = propValue.IndexOf(value);
-                        while (propValue[index] != '|')
+                        int count = 1;
+                        while (propValue[index+count-1] != '|')
                         {
-                            propValue.Remove(index, 1);
+                            ++count;
                         }
-                        propValue.Remove(index);
+                        propValue = propValue.Remove(index,count);
                         
                     }
                     propValue = propValue + value + args + '|';

@@ -142,18 +142,18 @@ namespace WpfApp1
             while (cacheQue.Count > 0)
             {
                 BaseNode currNode = cacheQue[0];
-                List<BaseNode> newChilds = new List<BaseNode>();
-                foreach(var child in currNode.GetChilds())
+                List<BaseNode> oldChilds = new List<BaseNode>();
+                foreach(var oldNode in currNode.GetChilds())
                 {
-                    BaseNode node = BaseNode.NodeCreator(child.GetNodeType(), this);
-                    node.RebuildNode(child);
-                    newChilds.Add(node);
+                    oldChilds.Add(oldNode);
                 }
                 currNode.DeleteAllChildNode();
-                foreach(var newNode in newChilds)
+                foreach(var child in oldChilds)
                 {
-                    currNode.AddChildNode(newNode);
-                    cacheQue.Add(newNode);
+                    BaseNode node = BaseNode.NodeCreator(child.GetNodeType(), this);
+                    currNode.AddChildNode(node);
+                    cacheQue.Add(node);
+                    node.RebuildNode(child);
                 }
                 cacheQue.RemoveAt(0);
             }
