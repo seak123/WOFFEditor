@@ -455,6 +455,7 @@ namespace WpfApp1
 
             NodeCanvas.Children.Clear();
             nodeDic.Clear();
+            height = 0;
             UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
             UpdateNodeLine();
         }
