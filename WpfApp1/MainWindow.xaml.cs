@@ -87,15 +87,25 @@ namespace WpfApp1
             bt.MouseRightButtonUp += (s, e) =>
             {
                 currentSelectNodeUID = uid;
+                SetNodeSelect();
             };
             bt.Click += (e, a) =>
             {
                 currentSelectNodeUID = uid;
                 SetPropertyView(currentSelectNodeUID);
+                SetNodeSelect();
             };
             NodeCanvas.Children.Add(bt);
 
             return bt;
+        }
+
+        void SetNodeSelect()
+        {
+            foreach (var uid in nodeDic.Keys)
+            {
+                nodeDic[uid].Background = uid == currentSelectNodeUID ? Brushes.LightBlue : Brushes.White;
+            }
         }
 
         public void DeleteNode(int uid)
