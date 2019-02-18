@@ -100,7 +100,13 @@ namespace WpfApp1
 
         public void DeleteNode(int uid)
         {
+            skill.DeleteNode(uid);
 
+            NodeCanvas.Children.Clear();
+            nodeDic.Clear();
+            height = 0;
+            UpdateNodeView(dataMgr.GetCurrFile().GetRoot(), 0);
+            UpdateNodeLine();
         }
 
         void CreateRootNode()
@@ -120,7 +126,9 @@ namespace WpfApp1
             }
             MenuItem deleteItem = new MenuItem();
             deleteItem.Header = "删除";
-            deleteItem.Click += (e, a) => { };
+            deleteItem.Click += (e, a) => {
+                DeleteNode(currentSelectNodeUID);
+            };
             nodeViewMenu.Items.Add(deleteItem);
         }
 
