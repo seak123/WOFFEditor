@@ -302,6 +302,7 @@ namespace WpfApp1
                             check.Checked += (e, a) => {
                                 valueText.Text = "";
                                 valueText.Visibility = Visibility.Visible;
+                                property.SetValue(select.Key);
                             };
                             check.Unchecked += (e, a) =>
                             {
