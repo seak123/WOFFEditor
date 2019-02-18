@@ -36,7 +36,9 @@ namespace WpfApp1
         int RequestNodeUid();
         BaseNode GetRoot();
         int GetUid();
+        void DeleteNode(int uid);
         int AddChildNode(NodeType type, int parentUid);
+        void ReplaceNode(NodeType type, int uid);
         BaseNode FindNode(int uid);
     }
     [Serializable]
